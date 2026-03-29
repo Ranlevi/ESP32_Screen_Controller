@@ -139,11 +139,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/esp_hal_uart/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
   include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/esp_pm/cmake_install.cmake")
 endif()
 
@@ -214,11 +209,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/hal/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
   include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/log/cmake_install.cmake")
 endif()
 
@@ -229,7 +219,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/soc/cmake_install.cmake")
+  include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/hal/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
@@ -275,6 +265,36 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/cxx/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/soc/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/esp_hal_uart/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/esp_ringbuf/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/esp_psram/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/esp_driver_uart/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/serial_link/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)

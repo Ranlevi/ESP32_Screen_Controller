@@ -8,6 +8,10 @@ This repository is for a public MCU showcase project intended to demonstrate pro
 
 The project will deliver firmware for an ESP WROOM 32 module. The module will be connected to an OLED screen (exact model still TBD) via I2C, and also connected to a browser-based web app running in Chrome which will communicate with the device via Web Serial. The UI will allow the user to control what appears on the screen and to observe system behavior in real time.
 
+## Folder Structure and important files
+
+- main/main.c - firmware entry point.
+
 ## Hardware
 
 - Module: ESP WROOM 32.
