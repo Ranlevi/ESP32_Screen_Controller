@@ -1,0 +1,23 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/test_profiler.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/profiler/profiler.c.obj"
+  "CMakeFiles/test_profiler.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/profiler/profiler.c.obj.d"
+  "CMakeFiles/test_profiler.dir/stubs/esp_stubs.c.obj"
+  "CMakeFiles/test_profiler.dir/stubs/esp_stubs.c.obj.d"
+  "CMakeFiles/test_profiler.dir/stubs/freertos_stubs.c.obj"
+  "CMakeFiles/test_profiler.dir/stubs/freertos_stubs.c.obj.d"
+  "CMakeFiles/test_profiler.dir/stubs/profiler_hw_stubs.c.obj"
+  "CMakeFiles/test_profiler.dir/stubs/profiler_hw_stubs.c.obj.d"
+  "CMakeFiles/test_profiler.dir/test_profiler.c.obj"
+  "CMakeFiles/test_profiler.dir/test_profiler.c.obj.d"
+  "CMakeFiles/test_profiler.dir/unity/unity.c.obj"
+  "CMakeFiles/test_profiler.dir/unity/unity.c.obj.d"
+  "libtest_profiler.dll.a"
+  "test_profiler.exe"
+  "test_profiler.exe.manifest"
+  "test_profiler.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang C)
+  include(CMakeFiles/test_profiler.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

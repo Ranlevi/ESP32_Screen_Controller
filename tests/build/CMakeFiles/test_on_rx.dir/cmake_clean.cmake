@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/test_on_rx.dir/stubs/esp_stubs.c.obj.d"
   "CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.obj"
   "CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.obj.d"
+  "CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj"
+  "CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj.d"
   "CMakeFiles/test_on_rx.dir/stubs/serial_link_stub.c.obj"
   "CMakeFiles/test_on_rx.dir/stubs/serial_link_stub.c.obj.d"
   "CMakeFiles/test_on_rx.dir/test_on_rx.c.obj"

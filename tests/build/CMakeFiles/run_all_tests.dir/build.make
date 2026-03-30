@@ -68,10 +68,12 @@ include CMakeFiles/run_all_tests.dir/progress.make
 CMakeFiles/run_all_tests: test_on_rx.exe
 CMakeFiles/run_all_tests: test_serial_link.exe
 CMakeFiles/run_all_tests: test_oled.exe
+CMakeFiles/run_all_tests: test_profiler.exe
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Running all test suites"
 	.\test_on_rx.exe
 	.\test_serial_link.exe
 	.\test_oled.exe
+	.\test_profiler.exe
 
 CMakeFiles/run_all_tests.dir/codegen:
 .PHONY : CMakeFiles/run_all_tests.dir/codegen

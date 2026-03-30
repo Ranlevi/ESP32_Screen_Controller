@@ -32,7 +32,11 @@ The project will deliver firmware for an ESP WROOM 32 module. The module will be
 
 - MAC: fc:b4:67:f1:4e:e0
 
-- SSD1306 OLED display.
+- SSD1306 OLED display. The OLED display is connected to the board via I2C, with the following pinout:
+   - 3.3V
+   - GND
+   - SCL: GPIO22
+   - SDA: GPIO21
 
 ## Software
 
@@ -40,12 +44,12 @@ The project will deliver firmware for an ESP WROOM 32 module. The module will be
 
 - Host: Windows 11
 
-## OLED Display
-The OLED display is connected to the board via I2C, with the following pinout:
-- 3.3V
-- GND
-- SCL: GPIO22
-- SDA: GPIO21
+## Current features implemented:
+- Web app sending text to the module, which is displayed on the screen and returned
+as echo.
+- Unity-based unit tests.
+- Started work on a profiler that will send data every 2 seconds to the web app
+  and to the screen.
 
 ## Planned Features
 

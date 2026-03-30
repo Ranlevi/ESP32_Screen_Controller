@@ -1,7 +1,7 @@
 {
     "version":            "1.3",
     "project_name":       "ESP32_Screen_Controller",
-    "project_version":    "8d4bf42-dirty",
+    "project_version":    "847a4db-dirty",
     "project_path":       "C:/Users/ranle/Downloads/ESP32_Screen_Controller",
     "idf_path":           "C:/esp/v6.0/esp-idf",
     "build_dir":          "C:/Users/ranle/Downloads/ESP32_Screen_Controller/build",
@@ -25,8 +25,8 @@
         "COMPONENT_KCONFIGS_PROJBUILD" : "C:/esp/v6.0/esp-idf/components/bootloader/Kconfig.projbuild;C:/esp/v6.0/esp-idf/components/esp_app_format/Kconfig.projbuild;C:/esp/v6.0/esp-idf/components/esp_rom/Kconfig.projbuild;C:/esp/v6.0/esp-idf/components/esptool_py/Kconfig.projbuild;C:/esp/v6.0/esp-idf/components/partition_table/Kconfig.projbuild"
     },
     "common_component_reqs": [ "cxx", "esp_libc", "freertos", "esp_hw_support", "heap", "log", "soc", "hal", "esp_rom", "esp_common", "esp_system", "esp_stdio", "xtensa" ],
-    "build_components" : [ "app_update", "bootloader", "bootloader_support", "cxx", "efuse", "esp_app_format", "esp_blockdev", "esp_bootloader_format", "esp_common", "esp_driver_bitscrambler", "esp_driver_dma", "esp_driver_gpio", "esp_driver_i2c", "esp_driver_i2s", "esp_driver_parlio", "esp_driver_spi", "esp_driver_uart", "esp_hal_ana_conv", "esp_hal_clock", "esp_hal_dma", "esp_hal_gpio", "esp_hal_gpspi", "esp_hal_i2c", "esp_hal_i2s", "esp_hal_lcd", "esp_hal_mspi", "esp_hal_parlio", "esp_hal_pmu", "esp_hal_rtc_timer", "esp_hal_security", "esp_hal_timg", "esp_hal_touch_sens", "esp_hal_uart", "esp_hal_usb", "esp_hal_wdt", "esp_hw_support", "esp_lcd", "esp_libc", "esp_mm", "esp_partition", "esp_pm", "esp_psram", "esp_ringbuf", "esp_rom", "esp_security", "esp_stdio", "esp_system", "esp_timer", "esp_usb_cdc_rom_console", "esptool_py", "freertos", "hal", "heap", "log", "main", "mbedtls", "oled", "partition_table", "pthread", "serial_link", "soc", "spi_flash", "xtensa", "" ],
-    "build_component_paths" : [ "C:/esp/v6.0/esp-idf/components/app_update", "C:/esp/v6.0/esp-idf/components/bootloader", "C:/esp/v6.0/esp-idf/components/bootloader_support", "C:/esp/v6.0/esp-idf/components/cxx", "C:/esp/v6.0/esp-idf/components/efuse", "C:/esp/v6.0/esp-idf/components/esp_app_format", "C:/esp/v6.0/esp-idf/components/esp_blockdev", "C:/esp/v6.0/esp-idf/components/esp_bootloader_format", "C:/esp/v6.0/esp-idf/components/esp_common", "C:/esp/v6.0/esp-idf/components/esp_driver_bitscrambler", "C:/esp/v6.0/esp-idf/components/esp_driver_dma", "C:/esp/v6.0/esp-idf/components/esp_driver_gpio", "C:/esp/v6.0/esp-idf/components/esp_driver_i2c", "C:/esp/v6.0/esp-idf/components/esp_driver_i2s", "C:/esp/v6.0/esp-idf/components/esp_driver_parlio", "C:/esp/v6.0/esp-idf/components/esp_driver_spi", "C:/esp/v6.0/esp-idf/components/esp_driver_uart", "C:/esp/v6.0/esp-idf/components/esp_hal_ana_conv", "C:/esp/v6.0/esp-idf/components/esp_hal_clock", "C:/esp/v6.0/esp-idf/components/esp_hal_dma", "C:/esp/v6.0/esp-idf/components/esp_hal_gpio", "C:/esp/v6.0/esp-idf/components/esp_hal_gpspi", "C:/esp/v6.0/esp-idf/components/esp_hal_i2c", "C:/esp/v6.0/esp-idf/components/esp_hal_i2s", "C:/esp/v6.0/esp-idf/components/esp_hal_lcd", "C:/esp/v6.0/esp-idf/components/esp_hal_mspi", "C:/esp/v6.0/esp-idf/components/esp_hal_parlio", "C:/esp/v6.0/esp-idf/components/esp_hal_pmu", "C:/esp/v6.0/esp-idf/components/esp_hal_rtc_timer", "C:/esp/v6.0/esp-idf/components/esp_hal_security", "C:/esp/v6.0/esp-idf/components/esp_hal_timg", "C:/esp/v6.0/esp-idf/components/esp_hal_touch_sens", "C:/esp/v6.0/esp-idf/components/esp_hal_uart", "C:/esp/v6.0/esp-idf/components/esp_hal_usb", "C:/esp/v6.0/esp-idf/components/esp_hal_wdt", "C:/esp/v6.0/esp-idf/components/esp_hw_support", "C:/esp/v6.0/esp-idf/components/esp_lcd", "C:/esp/v6.0/esp-idf/components/esp_libc", "C:/esp/v6.0/esp-idf/components/esp_mm", "C:/esp/v6.0/esp-idf/components/esp_partition", "C:/esp/v6.0/esp-idf/components/esp_pm", "C:/esp/v6.0/esp-idf/components/esp_psram", "C:/esp/v6.0/esp-idf/components/esp_ringbuf", "C:/esp/v6.0/esp-idf/components/esp_rom", "C:/esp/v6.0/esp-idf/components/esp_security", "C:/esp/v6.0/esp-idf/components/esp_stdio", "C:/esp/v6.0/esp-idf/components/esp_system", "C:/esp/v6.0/esp-idf/components/esp_timer", "C:/esp/v6.0/esp-idf/components/esp_usb_cdc_rom_console", "C:/esp/v6.0/esp-idf/components/esptool_py", "C:/esp/v6.0/esp-idf/components/freertos", "C:/esp/v6.0/esp-idf/components/hal", "C:/esp/v6.0/esp-idf/components/heap", "C:/esp/v6.0/esp-idf/components/log", "C:/Users/ranle/Downloads/ESP32_Screen_Controller/main", "C:/esp/v6.0/esp-idf/components/mbedtls", "C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled", "C:/esp/v6.0/esp-idf/components/partition_table", "C:/esp/v6.0/esp-idf/components/pthread", "C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link", "C:/esp/v6.0/esp-idf/components/soc", "C:/esp/v6.0/esp-idf/components/spi_flash", "C:/esp/v6.0/esp-idf/components/xtensa", "" ],
+    "build_components" : [ "app_update", "bootloader", "bootloader_support", "cxx", "efuse", "esp_app_format", "esp_blockdev", "esp_bootloader_format", "esp_common", "esp_driver_bitscrambler", "esp_driver_dma", "esp_driver_gpio", "esp_driver_i2c", "esp_driver_i2s", "esp_driver_parlio", "esp_driver_spi", "esp_driver_uart", "esp_hal_ana_conv", "esp_hal_clock", "esp_hal_dma", "esp_hal_gpio", "esp_hal_gpspi", "esp_hal_i2c", "esp_hal_i2s", "esp_hal_lcd", "esp_hal_mspi", "esp_hal_parlio", "esp_hal_pmu", "esp_hal_rtc_timer", "esp_hal_security", "esp_hal_timg", "esp_hal_touch_sens", "esp_hal_uart", "esp_hal_usb", "esp_hal_wdt", "esp_hw_support", "esp_lcd", "esp_libc", "esp_mm", "esp_partition", "esp_pm", "esp_psram", "esp_ringbuf", "esp_rom", "esp_security", "esp_stdio", "esp_system", "esp_timer", "esp_usb_cdc_rom_console", "esptool_py", "freertos", "hal", "heap", "log", "main", "mbedtls", "oled", "partition_table", "profiler", "pthread", "serial_link", "soc", "spi_flash", "xtensa", "" ],
+    "build_component_paths" : [ "C:/esp/v6.0/esp-idf/components/app_update", "C:/esp/v6.0/esp-idf/components/bootloader", "C:/esp/v6.0/esp-idf/components/bootloader_support", "C:/esp/v6.0/esp-idf/components/cxx", "C:/esp/v6.0/esp-idf/components/efuse", "C:/esp/v6.0/esp-idf/components/esp_app_format", "C:/esp/v6.0/esp-idf/components/esp_blockdev", "C:/esp/v6.0/esp-idf/components/esp_bootloader_format", "C:/esp/v6.0/esp-idf/components/esp_common", "C:/esp/v6.0/esp-idf/components/esp_driver_bitscrambler", "C:/esp/v6.0/esp-idf/components/esp_driver_dma", "C:/esp/v6.0/esp-idf/components/esp_driver_gpio", "C:/esp/v6.0/esp-idf/components/esp_driver_i2c", "C:/esp/v6.0/esp-idf/components/esp_driver_i2s", "C:/esp/v6.0/esp-idf/components/esp_driver_parlio", "C:/esp/v6.0/esp-idf/components/esp_driver_spi", "C:/esp/v6.0/esp-idf/components/esp_driver_uart", "C:/esp/v6.0/esp-idf/components/esp_hal_ana_conv", "C:/esp/v6.0/esp-idf/components/esp_hal_clock", "C:/esp/v6.0/esp-idf/components/esp_hal_dma", "C:/esp/v6.0/esp-idf/components/esp_hal_gpio", "C:/esp/v6.0/esp-idf/components/esp_hal_gpspi", "C:/esp/v6.0/esp-idf/components/esp_hal_i2c", "C:/esp/v6.0/esp-idf/components/esp_hal_i2s", "C:/esp/v6.0/esp-idf/components/esp_hal_lcd", "C:/esp/v6.0/esp-idf/components/esp_hal_mspi", "C:/esp/v6.0/esp-idf/components/esp_hal_parlio", "C:/esp/v6.0/esp-idf/components/esp_hal_pmu", "C:/esp/v6.0/esp-idf/components/esp_hal_rtc_timer", "C:/esp/v6.0/esp-idf/components/esp_hal_security", "C:/esp/v6.0/esp-idf/components/esp_hal_timg", "C:/esp/v6.0/esp-idf/components/esp_hal_touch_sens", "C:/esp/v6.0/esp-idf/components/esp_hal_uart", "C:/esp/v6.0/esp-idf/components/esp_hal_usb", "C:/esp/v6.0/esp-idf/components/esp_hal_wdt", "C:/esp/v6.0/esp-idf/components/esp_hw_support", "C:/esp/v6.0/esp-idf/components/esp_lcd", "C:/esp/v6.0/esp-idf/components/esp_libc", "C:/esp/v6.0/esp-idf/components/esp_mm", "C:/esp/v6.0/esp-idf/components/esp_partition", "C:/esp/v6.0/esp-idf/components/esp_pm", "C:/esp/v6.0/esp-idf/components/esp_psram", "C:/esp/v6.0/esp-idf/components/esp_ringbuf", "C:/esp/v6.0/esp-idf/components/esp_rom", "C:/esp/v6.0/esp-idf/components/esp_security", "C:/esp/v6.0/esp-idf/components/esp_stdio", "C:/esp/v6.0/esp-idf/components/esp_system", "C:/esp/v6.0/esp-idf/components/esp_timer", "C:/esp/v6.0/esp-idf/components/esp_usb_cdc_rom_console", "C:/esp/v6.0/esp-idf/components/esptool_py", "C:/esp/v6.0/esp-idf/components/freertos", "C:/esp/v6.0/esp-idf/components/hal", "C:/esp/v6.0/esp-idf/components/heap", "C:/esp/v6.0/esp-idf/components/log", "C:/Users/ranle/Downloads/ESP32_Screen_Controller/main", "C:/esp/v6.0/esp-idf/components/mbedtls", "C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled", "C:/esp/v6.0/esp-idf/components/partition_table", "C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/profiler", "C:/esp/v6.0/esp-idf/components/pthread", "C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link", "C:/esp/v6.0/esp-idf/components/soc", "C:/esp/v6.0/esp-idf/components/spi_flash", "C:/esp/v6.0/esp-idf/components/xtensa", "" ],
     "build_component_info" : {
         "app_update": {
             "alias": "idf::app_update",
@@ -845,7 +845,7 @@
             "dir": "C:/Users/ranle/Downloads/ESP32_Screen_Controller/main",
             "type": "LIBRARY",
             "lib": "__idf_main",
-            "reqs": [ "serial_link", "oled" ],
+            "reqs": [ "serial_link", "oled", "profiler" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
@@ -897,6 +897,21 @@
             "file": "",
             "sources": [],
             "include_dirs": []
+        },
+        "profiler": {
+            "alias": "idf::profiler",
+            "target": "___idf_profiler",
+            "prefix": "idf",
+            "dir": "C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/profiler",
+            "type": "LIBRARY",
+            "lib": "__idf_profiler",
+            "reqs": [ "esp_system", "esp_timer", "freertos", "serial_link" ],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "file": "C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/profiler/libprofiler.a",
+            "sources": [ "C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/profiler/profiler.c" ],
+            "include_dirs": [ "include" ]
         },
         "pthread": {
             "alias": "idf::pthread",
@@ -2763,7 +2778,7 @@
             "dir": "C:/Users/ranle/Downloads/ESP32_Screen_Controller/main",
             "source": "project_components",
             "lib": "__idf_main",
-            "reqs": [ "serial_link", "oled" ],
+            "reqs": [ "serial_link", "oled", "profiler" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
@@ -2777,6 +2792,19 @@
             "source": "project_components",
             "lib": "__idf_oled",
             "reqs": [ "esp_lcd", "esp_driver_i2c" ],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "include_dirs": [ "include" ]
+        },
+        "profiler": {
+            "alias": "idf::profiler",
+            "target": "___idf_profiler",
+            "prefix": "idf",
+            "dir": "C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/profiler",
+            "source": "project_components",
+            "lib": "__idf_profiler",
+            "reqs": [ "esp_system", "esp_timer", "freertos", "serial_link" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],

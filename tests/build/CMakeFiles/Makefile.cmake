@@ -54,5 +54,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/test_on_rx.dir/DependInfo.cmake"
   "CMakeFiles/test_serial_link.dir/DependInfo.cmake"
   "CMakeFiles/test_oled.dir/DependInfo.cmake"
+  "CMakeFiles/test_profiler.dir/DependInfo.cmake"
   "CMakeFiles/run_all_tests.dir/DependInfo.cmake"
   )

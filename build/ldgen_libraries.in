@@ -103,6 +103,8 @@ $<TARGET_FILE:__idf_esp_hal_lcd>
 $<TARGET_FILE:__idf_esp_driver_i2s>
 $<TARGET_FILE:idf::oled>
 $<TARGET_FILE:__idf_esp_lcd>
-$<TARGET_FILE:idf::main>
+$<TARGET_FILE:idf::profiler>
 $<TARGET_FILE:__idf_serial_link>
+$<TARGET_FILE:idf::main>
 $<TARGET_FILE:__idf_oled>
+$<TARGET_FILE:__idf_profiler>

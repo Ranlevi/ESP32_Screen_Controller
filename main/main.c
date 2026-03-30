@@ -2,9 +2,10 @@
 
 #include "esp_log.h"
 #include "oled.h"
+#include "profiler.h"
 #include "serial_link.h"
 
-#define FW_VERSION "0.3"
+#define FW_VERSION "0.4"
 
 // 128px wide / 8px per char = 16 characters per row
 #define DISPLAY_COLS 16
@@ -80,7 +81,6 @@ void app_main(void)
         return;
     }
 
-    (void)stats; //temporary cast to void, to prevent warnings.
 
     serial_link_write((const uint8_t *)startup_banner, sizeof(startup_banner) - 1U);
 
@@ -89,4 +89,9 @@ void app_main(void)
     }
 
     oled_show_text(0, 0, "Hello World");
+
+    profiler_cfg_t profiler_cfg = PROFILER_DEFAULT_CONFIG();
+    profiler_cfg.write_fn    = serial_link_write;
+    profiler_cfg.serial_stats = stats;
+    profiler_init(&profiler_cfg);
 }

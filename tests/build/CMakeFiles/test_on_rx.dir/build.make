@@ -131,11 +131,26 @@ CMakeFiles/test_on_rx.dir/stubs/serial_link_stub.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_on_rx.dir/stubs/serial_link_stub.c.s"
 	C:\msys64\mingw64\bin\cc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\stubs\serial_link_stub.c -o CMakeFiles\test_on_rx.dir\stubs\serial_link_stub.c.s
 
+CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj: CMakeFiles/test_on_rx.dir/flags.make
+CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj: CMakeFiles/test_on_rx.dir/includes_C.rsp
+CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj: C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/profiler_stub.c
+CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj: CMakeFiles/test_on_rx.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj"
+	C:\msys64\mingw64\bin\cc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj -MF CMakeFiles\test_on_rx.dir\stubs\profiler_stub.c.obj.d -o CMakeFiles\test_on_rx.dir\stubs\profiler_stub.c.obj -c C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\stubs\profiler_stub.c
+
+CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.i"
+	C:\msys64\mingw64\bin\cc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\stubs\profiler_stub.c > CMakeFiles\test_on_rx.dir\stubs\profiler_stub.c.i
+
+CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.s"
+	C:\msys64\mingw64\bin\cc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\stubs\profiler_stub.c -o CMakeFiles\test_on_rx.dir\stubs\profiler_stub.c.s
+
 CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj: CMakeFiles/test_on_rx.dir/flags.make
 CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj: CMakeFiles/test_on_rx.dir/includes_C.rsp
 CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj: C:/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c
 CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj: CMakeFiles/test_on_rx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj"
 	C:\msys64\mingw64\bin\cc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj -MF CMakeFiles\test_on_rx.dir\C_\Users\ranle\Downloads\ESP32_Screen_Controller\main\main.c.obj.d -o CMakeFiles\test_on_rx.dir\C_\Users\ranle\Downloads\ESP32_Screen_Controller\main\main.c.obj -c C:\Users\ranle\Downloads\ESP32_Screen_Controller\main\main.c
 
 CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.i: cmake_force
@@ -150,7 +165,7 @@ CMakeFiles/test_on_rx.dir/test_on_rx.c.obj: CMakeFiles/test_on_rx.dir/flags.make
 CMakeFiles/test_on_rx.dir/test_on_rx.c.obj: CMakeFiles/test_on_rx.dir/includes_C.rsp
 CMakeFiles/test_on_rx.dir/test_on_rx.c.obj: C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/test_on_rx.c
 CMakeFiles/test_on_rx.dir/test_on_rx.c.obj: CMakeFiles/test_on_rx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/test_on_rx.dir/test_on_rx.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/test_on_rx.dir/test_on_rx.c.obj"
 	C:\msys64\mingw64\bin\cc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_on_rx.dir/test_on_rx.c.obj -MF CMakeFiles\test_on_rx.dir\test_on_rx.c.obj.d -o CMakeFiles\test_on_rx.dir\test_on_rx.c.obj -c C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\test_on_rx.c
 
 CMakeFiles/test_on_rx.dir/test_on_rx.c.i: cmake_force
@@ -167,6 +182,7 @@ test_on_rx_OBJECTS = \
 "CMakeFiles/test_on_rx.dir/stubs/esp_stubs.c.obj" \
 "CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.obj" \
 "CMakeFiles/test_on_rx.dir/stubs/serial_link_stub.c.obj" \
+"CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj" \
 "CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj" \
 "CMakeFiles/test_on_rx.dir/test_on_rx.c.obj"
 
@@ -177,13 +193,14 @@ test_on_rx.exe: CMakeFiles/test_on_rx.dir/unity/unity.c.obj
 test_on_rx.exe: CMakeFiles/test_on_rx.dir/stubs/esp_stubs.c.obj
 test_on_rx.exe: CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.obj
 test_on_rx.exe: CMakeFiles/test_on_rx.dir/stubs/serial_link_stub.c.obj
+test_on_rx.exe: CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj
 test_on_rx.exe: CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj
 test_on_rx.exe: CMakeFiles/test_on_rx.dir/test_on_rx.c.obj
 test_on_rx.exe: CMakeFiles/test_on_rx.dir/build.make
 test_on_rx.exe: CMakeFiles/test_on_rx.dir/linkLibs.rsp
 test_on_rx.exe: CMakeFiles/test_on_rx.dir/objects1.rsp
 test_on_rx.exe: CMakeFiles/test_on_rx.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable test_on_rx.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking C executable test_on_rx.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\test_on_rx.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

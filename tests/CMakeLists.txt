@@ -11,6 +11,7 @@ add_executable(test_on_rx
     stubs/esp_stubs.c
     stubs/oled_stub.c
     stubs/serial_link_stub.c
+    stubs/profiler_stub.c
     ../main/main.c
     test_on_rx.c
 )
@@ -55,12 +56,32 @@ target_include_directories(test_oled PRIVATE
 )
 
 # ---------------------------------------------------------------------------
-# 'make test' runs all three executables in sequence
+# test_profiler — tests profiler component (real component, stub hardware)
+# ---------------------------------------------------------------------------
+add_executable(test_profiler
+    unity/unity.c
+    stubs/esp_stubs.c
+    stubs/freertos_stubs.c
+    stubs/profiler_hw_stubs.c
+    ../components/profiler/profiler.c
+    test_profiler.c
+)
+target_include_directories(test_profiler PRIVATE
+    unity/
+    stubs/
+    ../components/profiler/include/
+    ../components/serial_link/include/
+)
+target_compile_definitions(test_profiler PRIVATE PROFILER_TEST_ACCESS)
+
+# ---------------------------------------------------------------------------
+# 'make test' runs all four executables in sequence
 # ---------------------------------------------------------------------------
 add_custom_target(run_all_tests
     COMMAND test_on_rx
     COMMAND test_serial_link
     COMMAND test_oled
-    DEPENDS test_on_rx test_serial_link test_oled
+    COMMAND test_profiler
+    DEPENDS test_on_rx test_serial_link test_oled test_profiler
     COMMENT "Running all test suites"
 )

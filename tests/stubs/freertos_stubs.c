@@ -28,6 +28,21 @@ void vSemaphoreDelete(SemaphoreHandle_t sem)
     (void)sem;
 }
 
+void vTaskDelay(TickType_t ticks)
+{
+    (void)ticks;
+}
+
+UBaseType_t uxTaskGetNumberOfTasks(void)
+{
+    return 1;
+}
+
+void vTaskGetRunTimeStats(char *buf)
+{
+    buf[0] = '\0';
+}
+
 BaseType_t xTaskCreate(TaskFunction_t fn,
                        const char *name,
                        uint32_t stack_depth,

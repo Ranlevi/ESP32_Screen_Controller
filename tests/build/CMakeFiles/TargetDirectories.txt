@@ -1,6 +1,7 @@
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/build/CMakeFiles/test_on_rx.dir
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/build/CMakeFiles/test_serial_link.dir
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/build/CMakeFiles/test_oled.dir
+C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/build/CMakeFiles/test_profiler.dir
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/build/CMakeFiles/run_all_tests.dir
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/build/CMakeFiles/edit_cache.dir
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/build/CMakeFiles/rebuild_cache.dir
