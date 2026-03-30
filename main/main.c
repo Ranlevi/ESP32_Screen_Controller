@@ -4,7 +4,7 @@
 #include "oled.h"
 #include "serial_link.h"
 
-#define FW_VERSION "0.2"
+#define FW_VERSION "0.3"
 
 // 128px wide / 8px per char = 16 characters per row
 #define DISPLAY_COLS 16
@@ -16,7 +16,7 @@ static size_t s_line_len = 0;
 
 //  Accumulates received bytes into a line buffer.
 //  Flushes to the OLED on newline or when the line is full.
-static void on_rx(const uint8_t *data, size_t len)
+void on_rx(const uint8_t *data, size_t len)
 {
     for (size_t i = 0; i < len; i++) {
         char c = (char)data[i];
@@ -25,7 +25,7 @@ static void on_rx(const uint8_t *data, size_t len)
             continue;
         }
 
-        if (c == '\n' || s_line_len >= DISPLAY_COLS) {
+        if (c == '\n') {
             s_line_buf[s_line_len] = '\0';
             esp_err_t err = oled_clear();
             if (err != ESP_OK) {
@@ -36,13 +36,33 @@ static void on_rx(const uint8_t *data, size_t len)
                 ESP_LOGW(TAG, "oled_show_text failed: %s", esp_err_to_name(err));
             }
             s_line_len = 0;
-            if (c == '\n') {
-                continue;
-            }
+            continue;
         }
 
-        s_line_buf[s_line_len++] = c;
+        if (s_line_len < DISPLAY_COLS) {
+            s_line_buf[s_line_len++] = c;
+        }
+
+        if (s_line_len >= DISPLAY_COLS) {
+            s_line_buf[s_line_len] = '\0';
+            esp_err_t err = oled_clear();
+            if (err != ESP_OK) {
+                ESP_LOGW(TAG, "oled_clear failed: %s", esp_err_to_name(err));
+            }
+            err = oled_show_text(0, 0, s_line_buf);
+            if (err != ESP_OK) {
+                ESP_LOGW(TAG, "oled_show_text failed: %s", esp_err_to_name(err));
+            }
+            s_line_len = 0;
+        }
     }
+}
+
+//  Resets the line buffer state. Called by tests between test cases.
+void on_rx_reset(void)
+{
+    s_line_len = 0;
+    s_line_buf[0] = '\0';
 }
 
 //  Configure the UART component, send a startup banner to the
