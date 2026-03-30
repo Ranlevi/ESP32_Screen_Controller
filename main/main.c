@@ -1,5 +1,6 @@
 #include <string.h>
 
+#include "esp_log.h"
 #include "oled.h"
 #include "serial_link.h"
 
@@ -7,6 +8,8 @@
 
 // 128px wide / 8px per char = 16 characters per row
 #define DISPLAY_COLS 16
+
+static const char *TAG = "main";
 
 static char   s_line_buf[DISPLAY_COLS + 1];
 static size_t s_line_len = 0;
@@ -24,8 +27,14 @@ static void on_rx(const uint8_t *data, size_t len)
 
         if (c == '\n' || s_line_len >= DISPLAY_COLS) {
             s_line_buf[s_line_len] = '\0';
-            oled_clear();
-            oled_show_text(0, 0, s_line_buf);
+            esp_err_t err = oled_clear();
+            if (err != ESP_OK) {
+                ESP_LOGW(TAG, "oled_clear failed: %s", esp_err_to_name(err));
+            }
+            err = oled_show_text(0, 0, s_line_buf);
+            if (err != ESP_OK) {
+                ESP_LOGW(TAG, "oled_show_text failed: %s", esp_err_to_name(err));
+            }
             s_line_len = 0;
             if (c == '\n') {
                 continue;

@@ -186,6 +186,9 @@ static void blit_char(int x, int y, char c)
 
     for (int col = 0; col < FONT_CHAR_WIDTH; col++) {
         int px = x + col;
+        if (px < 0) {
+            continue;
+        }
         if (px >= OLED_PIXEL_WIDTH) {
             break;
         }
@@ -240,7 +243,7 @@ esp_err_t oled_init(void)
     i2c_master_bus_handle_t bus_handle;
     esp_err_t err = i2c_new_master_bus(&bus_cfg, &bus_handle);
     if (err != ESP_OK) {
-        ESP_LOGE(TAG, "i2c_master_bus_create failed: %s", esp_err_to_name(err));
+        ESP_LOGE(TAG, "i2c_new_master_bus failed: %s", esp_err_to_name(err));
         return err;
     }
 
@@ -255,10 +258,10 @@ esp_err_t oled_init(void)
         .lcd_param_bits      = 8,
     };
 
-    //Create LCD panel IO handle
     err = esp_lcd_new_panel_io_i2c(bus_handle, &io_cfg, &io_handle);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_lcd_new_panel_io_i2c failed: %s", esp_err_to_name(err));
+        i2c_del_master_bus(bus_handle);
         return err;
     }
 
@@ -271,28 +274,40 @@ esp_err_t oled_init(void)
     err = esp_lcd_new_panel_ssd1306(io_handle, &panel_cfg, &s_panel);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_lcd_new_panel_ssd1306 failed: %s", esp_err_to_name(err));
+        esp_lcd_panel_io_del(io_handle);
+        i2c_del_master_bus(bus_handle);
         return err;
     }
 
     err = esp_lcd_panel_reset(s_panel);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_lcd_panel_reset failed: %s", esp_err_to_name(err));
+        esp_lcd_panel_del(s_panel);
+        esp_lcd_panel_io_del(io_handle);
+        i2c_del_master_bus(bus_handle);
+        s_panel = NULL;
         return err;
     }
 
     err = esp_lcd_panel_init(s_panel);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_lcd_panel_init failed: %s", esp_err_to_name(err));
+        esp_lcd_panel_del(s_panel);
+        esp_lcd_panel_io_del(io_handle);
+        i2c_del_master_bus(bus_handle);
+        s_panel = NULL;
         return err;
     }
 
     err = esp_lcd_panel_disp_on_off(s_panel, true);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_lcd_panel_disp_on_off failed: %s", esp_err_to_name(err));
+        esp_lcd_panel_del(s_panel);
+        esp_lcd_panel_io_del(io_handle);
+        i2c_del_master_bus(bus_handle);
+        s_panel = NULL;
         return err;
     }
-
-    memset(s_framebuffer, 0, sizeof(s_framebuffer));
 
     s_initialized = true;
     ESP_LOGI(TAG, "SSD1306 initialized (%dx%d)", OLED_PIXEL_WIDTH, OLED_PIXEL_HEIGHT);
@@ -315,7 +330,7 @@ esp_err_t oled_show_text(int col, int row, const char *text)
         return ESP_ERR_INVALID_STATE;
     }
 
-    if (text == NULL) {
+    if (text == NULL || col < 0 || row < 0) {
         return ESP_ERR_INVALID_ARG;
     }
 

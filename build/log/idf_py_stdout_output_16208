@@ -1,0 +1,58 @@
+Command: ninja all
+[0/1] Re-running CMake...
+-- Component directory C:/esp/v6.0/esp-idf/components/mqtt does not contain a CMakeLists.txt file. No component will be added
+-- Minimal build - ON
+-- Building ESP-IDF components for target esp32
+-- ESP-TEE is currently supported only on the esp32c6;esp32h2;esp32c5;esp32c61 SoCs
+-- KCONFIG_REPORT_VERBOSITY not set, using default
+-- Project sdkconfig file C:/Users/ranle/Downloads/ESP32_Screen_Controller/sdkconfig
+-- Compiler supported targets: xtensa-esp-elf
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- App "ESP32_Screen_Controller" version: 8d4bf42-dirty
+-- Setting up mbedtls configuration
+-- Linkage type is PUBLIC
+-- Adding linker script C:/esp/v6.0/esp-idf/components/esp_system/ld/esp32/memory.ld.in
+--   -> Preprocessing .in script: C:/esp/v6.0/esp-idf/components/esp_system/ld/esp32/memory.ld.in
+-- Adding linker script C:/esp/v6.0/esp-idf/components/esp_system/ld/esp32/sections.ld.in
+--   -> Preprocessing .in script: C:/esp/v6.0/esp-idf/components/esp_system/ld/esp32/sections.ld.in
+--   -> Applying ldgen processing: C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/esp-idf/esp_system/ld/sections.ld.in
+-- Adding linker script C:/esp/v6.0/esp-idf/components/esp_rom/esp32/ld/esp32.rom.ld
+-- Adding linker script C:/esp/v6.0/esp-idf/components/esp_rom/esp32/ld/esp32.rom.api.ld
+-- Adding linker script C:/esp/v6.0/esp-idf/components/esp_rom/esp32/ld/esp32.rom.libgcc.ld
+-- Adding linker script C:/esp/v6.0/esp-idf/components/esp_rom/esp32/ld/esp32.rom.libc-funcs.ld
+-- Adding linker script C:/esp/v6.0/esp-idf/components/soc/esp32/ld/esp32.peripherals.ld
+-- Components: app_update bootloader bootloader_support cxx efuse esp_app_format esp_blockdev esp_bootloader_format esp_common esp_driver_bitscrambler esp_driver_dma esp_driver_gpio esp_driver_i2c esp_driver_i2s esp_driver_parlio esp_driver_spi esp_driver_uart esp_hal_ana_conv esp_hal_clock esp_hal_dma esp_hal_gpio esp_hal_gpspi esp_hal_i2c esp_hal_i2s esp_hal_lcd esp_hal_mspi esp_hal_parlio esp_hal_pmu esp_hal_rtc_timer esp_hal_security esp_hal_timg esp_hal_touch_sens esp_hal_uart esp_hal_usb esp_hal_wdt esp_hw_support esp_lcd esp_libc esp_mm esp_partition esp_pm esp_psram esp_ringbuf esp_rom esp_security esp_stdio esp_system esp_timer esp_usb_cdc_rom_console esptool_py freertos hal heap log main mbedtls oled partition_table pthread serial_link soc spi_flash xtensa
+-- Component paths: C:/esp/v6.0/esp-idf/components/app_update C:/esp/v6.0/esp-idf/components/bootloader C:/esp/v6.0/esp-idf/components/bootloader_support C:/esp/v6.0/esp-idf/components/cxx C:/esp/v6.0/esp-idf/components/efuse C:/esp/v6.0/esp-idf/components/esp_app_format C:/esp/v6.0/esp-idf/components/esp_blockdev C:/esp/v6.0/esp-idf/components/esp_bootloader_format C:/esp/v6.0/esp-idf/components/esp_common C:/esp/v6.0/esp-idf/components/esp_driver_bitscrambler C:/esp/v6.0/esp-idf/components/esp_driver_dma C:/esp/v6.0/esp-idf/components/esp_driver_gpio C:/esp/v6.0/esp-idf/components/esp_driver_i2c C:/esp/v6.0/esp-idf/components/esp_driver_i2s C:/esp/v6.0/esp-idf/components/esp_driver_parlio C:/esp/v6.0/esp-idf/components/esp_driver_spi C:/esp/v6.0/esp-idf/components/esp_driver_uart C:/esp/v6.0/esp-idf/components/esp_hal_ana_conv C:/esp/v6.0/esp-idf/components/esp_hal_clock C:/esp/v6.0/esp-idf/components/esp_hal_dma C:/esp/v6.0/esp-idf/components/esp_hal_gpio C:/esp/v6.0/esp-idf/components/esp_hal_gpspi C:/esp/v6.0/esp-idf/components/esp_hal_i2c C:/esp/v6.0/esp-idf/components/esp_hal_i2s C:/esp/v6.0/esp-idf/components/esp_hal_lcd C:/esp/v6.0/esp-idf/components/esp_hal_mspi C:/esp/v6.0/esp-idf/components/esp_hal_parlio C:/esp/v6.0/esp-idf/components/esp_hal_pmu C:/esp/v6.0/esp-idf/components/esp_hal_rtc_timer C:/esp/v6.0/esp-idf/components/esp_hal_security C:/esp/v6.0/esp-idf/components/esp_hal_timg C:/esp/v6.0/esp-idf/components/esp_hal_touch_sens C:/esp/v6.0/esp-idf/components/esp_hal_uart C:/esp/v6.0/esp-idf/components/esp_hal_usb C:/esp/v6.0/esp-idf/components/esp_hal_wdt C:/esp/v6.0/esp-idf/components/esp_hw_support C:/esp/v6.0/esp-idf/components/esp_lcd C:/esp/v6.0/esp-idf/components/esp_libc C:/esp/v6.0/esp-idf/components/esp_mm C:/esp/v6.0/esp-idf/components/esp_partition C:/esp/v6.0/esp-idf/components/esp_pm C:/esp/v6.0/esp-idf/components/esp_psram C:/esp/v6.0/esp-idf/components/esp_ringbuf C:/esp/v6.0/esp-idf/components/esp_rom C:/esp/v6.0/esp-idf/components/esp_security C:/esp/v6.0/esp-idf/components/esp_stdio C:/esp/v6.0/esp-idf/components/esp_system C:/esp/v6.0/esp-idf/components/esp_timer C:/esp/v6.0/esp-idf/components/esp_usb_cdc_rom_console C:/esp/v6.0/esp-idf/components/esptool_py C:/esp/v6.0/esp-idf/components/freertos C:/esp/v6.0/esp-idf/components/hal C:/esp/v6.0/esp-idf/components/heap C:/esp/v6.0/esp-idf/components/log C:/Users/ranle/Downloads/ESP32_Screen_Controller/main C:/esp/v6.0/esp-idf/components/mbedtls C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled C:/esp/v6.0/esp-idf/components/partition_table C:/esp/v6.0/esp-idf/components/pthread C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link C:/esp/v6.0/esp-idf/components/soc C:/esp/v6.0/esp-idf/components/spi_flash C:/esp/v6.0/esp-idf/components/xtensa
+-- Configuring done (7.2s)
+-- Generating done (0.5s)
+-- Build files have been written to: C:/Users/ranle/Downloads/ESP32_Screen_Controller/build
+[1/16] Building C object esp-idf/esp_app_format/CMakeFiles/__idf_esp_app_format.dir/esp_app_desc.c.obj
+[2/16] Building C object esp-idf/oled/CMakeFiles/__idf_oled.dir/oled.c.obj
+[3/16] Building C object esp-idf/serial_link/CMakeFiles/__idf_serial_link.dir/serial_link.c.obj
+[4/16] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\ranle\Downloads\ESP32_Screen_Controller\build\bootloader && C:\Espressif\tools\python\v6.0\venv\Scripts\python.exe C:/esp/v6.0/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6610 bytes. 0x9f0 bytes (9%) free.
+[5/16] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj
+[6/16] No install step for 'bootloader'
+[7/16] Linking C static library esp-idf\esp_app_format\libesp_app_format.a
+[8/16] Completed 'bootloader'
+[9/16] Linking C static library esp-idf\serial_link\libserial_link.a
+[10/16] Linking C static library esp-idf\oled\liboled.a
+[11/16] Linking C static library esp-idf\main\libmain.a
+[12/16] Generating esp-idf/esp_system/ld/sections.ld
+[13/16] Linking CXX executable ESP32_Screen_Controller.elf
+[14/16] Generating binary image from built executable
+esptool v5.3.dev1
+Creating ESP32 image...
+Merged 2 ELF sections.
+Successfully created ESP32 image.
+Generated C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/ESP32_Screen_Controller.bin
+[15/16] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\ranle\Downloads\ESP32_Screen_Controller\build && C:\Espressif\tools\python\v6.0\venv\Scripts\python.exe C:/esp/v6.0/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/partition_table/partition-table.bin C:/Users/ranle/Downloads/ESP32_Screen_Controller/build/ESP32_Screen_Controller.bin"
+ESP32_Screen_Controller.bin binary size 0x2a3d0 bytes. Smallest app partition is 0x100000 bytes. 0xd5c30 bytes (84%) free.

@@ -160,12 +160,12 @@ esp_err_t serial_link_init(const serial_link_cfg_t *cfg, const serial_link_stats
 */
 esp_err_t serial_link_write(const uint8_t *data, size_t len)
 {
-    if (!s_initialized || data == NULL || len == 0U) {
-        return ESP_ERR_INVALID_ARG;
+    if (!s_initialized) {
+        return ESP_ERR_INVALID_STATE;
     }
 
-    if (s_tx_lock == NULL) {
-        return ESP_ERR_INVALID_STATE;
+    if (data == NULL || len == 0U) {
+        return ESP_ERR_INVALID_ARG;
     }
 
     if (xSemaphoreTake(s_tx_lock, portMAX_DELAY) != pdTRUE) {
