@@ -1,7 +1,7 @@
 {
     "version":            "1.3",
     "project_name":       "ESP32_Screen_Controller",
-    "project_version":    "57963b1-dirty",
+    "project_version":    "47764bc-dirty",
     "project_path":       "C:/Users/ranle/Downloads/ESP32_Screen_Controller",
     "idf_path":           "C:/esp/v6.0/esp-idf",
     "build_dir":          "C:/Users/ranle/Downloads/ESP32_Screen_Controller/build",

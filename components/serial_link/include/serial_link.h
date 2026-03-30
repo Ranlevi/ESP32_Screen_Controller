@@ -12,6 +12,10 @@ typedef struct {
     uint32_t rx_overflow_events;
 } serial_link_stats_t;
 
+//  Called from the RX task after each successful read.
+//  data and len are the raw bytes just received.
+typedef void (*serial_link_rx_cb_t)(const uint8_t *data, size_t len);
+
 typedef struct {
     uart_port_t uart_port;
     int baud_rate;
@@ -20,6 +24,7 @@ typedef struct {
     int task_stack_size;
     int task_priority;
     int read_timeout_ms;
+    serial_link_rx_cb_t rx_callback;    // optional; NULL to disable
 } serial_link_cfg_t;
 
 #define SERIAL_LINK_DEFAULT_CONFIG()        \
@@ -31,6 +36,7 @@ typedef struct {
         .task_stack_size = 3072,            \
         .task_priority = 5,                 \
         .read_timeout_ms = 100,             \
+        .rx_callback = NULL,                \
     }
 
 esp_err_t serial_link_init(const serial_link_cfg_t *cfg, const serial_link_stats_t **stats_out);

@@ -189,13 +189,13 @@ static void blit_char(int x, int y, char c)
         if (px >= OLED_PIXEL_WIDTH) {
             break;
         }
-        //  The font is row-major: glyph[row] has one bit per column, MSB = left.
+        //  The font is row-major: glyph[row] has one bit per column, LSB = left.
         //  The SSD1306 framebuffer is column-major: each byte is a vertical strip
         //  of 8 pixels within a page, LSB = top pixel.
         //  Transpose: for each output column, collect one bit from each font row.
         uint8_t col_byte = 0;
         for (int row = 0; row < FONT_CHAR_HEIGHT; row++) {
-            if (glyph[row] & (0x80u >> col)) {
+            if (glyph[row] & (1u << col)) {
                 col_byte |= (uint8_t)(1u << row);
             }
         }

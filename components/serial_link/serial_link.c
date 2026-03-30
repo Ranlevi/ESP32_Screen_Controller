@@ -53,6 +53,15 @@ static void serial_link_rx_task(void *arg)
 
         s_stats.bytes_rx += (uint32_t)read_len;
         serial_link_write(rx_buffer, (size_t)read_len); //Echo the incoming bytes.
+
+        //rx_callback is a pointer to on_rx, defined in main.c
+        //on_rx runs on serial_link_rx task's stack, because it is called
+        //directly by serial_link_rx: there's no new task created or queue 
+        //involved - just a normal function call. So the CPU pushes a stack
+        //frame into the currently active frame. 
+        if (s_cfg.rx_callback != NULL) {
+            s_cfg.rx_callback(rx_buffer, (size_t)read_len);
+        }
     }
 }
 
