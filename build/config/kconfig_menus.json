@@ -5516,6 +5516,34 @@
                 "children": [
                     {
                         "children": [],
+                        "depends_on": "SOC_BITSCRAMBLER_SUPPORTED",
+                        "help": "Place BitScrambler control functions into IRAM for better performance and fewer cache misses.",
+                        "id": "BITSCRAMBLER_CTRL_FUNC_IN_IRAM",
+                        "name": "BITSCRAMBLER_CTRL_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place BitScrambler control functions in IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_BITSCRAMBLER_SUPPORTED",
+                        "help": "This will ensure the BitScrambler object will not be allocated from a memory region\nwhere its cache can be disabled.",
+                        "id": "BITSCRAMBLER_OBJ_CACHE_SAFE",
+                        "name": "BITSCRAMBLER_OBJ_CACHE_SAFE",
+                        "range": null,
+                        "title": null,
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_BITSCRAMBLER_SUPPORTED",
+                "id": "component-config-esp-driver-bitscrambler-configurations-C:-esp-v6.0-esp-idf-components-esp_driver_bitscrambler-Kconfig-1",
+                "title": "ESP-Driver:BitScrambler Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
                         "depends_on": "SOC_GDMA_SUPPORTED",
                         "help": "Place GDMA control functions (like start/stop/append/reset) into IRAM,\nso that these functions can be IRAM-safe and able to be called in the other IRAM interrupt context.",
                         "id": "GDMA_CTRL_FUNC_IN_IRAM",
@@ -5682,6 +5710,208 @@
                 "depends_on": null,
                 "id": "component-config-esp-driver-gpio-configurations-C:-esp-v6.0-esp-idf-components-esp_driver_gpio-Kconfig-1",
                 "title": "ESP-Driver:GPIO Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2C_SUPPORTED",
+                        "help": "Ensure the I2C interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).\nnote: This cannot be used in the I2C legacy driver.",
+                        "id": "I2C_ISR_IRAM_SAFE",
+                        "name": "I2C_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "I2C ISR IRAM-Safe",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2C_SUPPORTED",
+                        "help": "whether to enable the debug log message for I2C driver.\nNote that this option only controls the I2C driver log, will not affect other drivers.",
+                        "id": "I2C_ENABLE_DEBUG_LOG",
+                        "name": "I2C_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Enable I2C debug log",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2C_SUPPORTED",
+                        "help": "Place I2C master ISR handler into IRAM for better performance and fewer cache misses.",
+                        "id": "I2C_MASTER_ISR_HANDLER_IN_IRAM",
+                        "name": "I2C_MASTER_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place I2C master ISR handler into IRAM",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_I2C_SUPPORTED",
+                "id": "component-config-esp-driver-i2c-configurations-C:-esp-v6.0-esp-idf-components-esp_driver_i2c-Kconfig-1",
+                "title": "ESP-Driver:I2C Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2S_SUPPORTED",
+                        "help": "Ensure the I2S interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).",
+                        "id": "I2S_ISR_IRAM_SAFE",
+                        "name": "I2S_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "I2S ISR IRAM-Safe",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2S_SUPPORTED",
+                        "help": "Place I2S control functions into IRAM,\nso that these functions can be IRAM-safe and able to be called in the other IRAM interrupt context.",
+                        "id": "I2S_CTRL_FUNC_IN_IRAM",
+                        "name": "I2S_CTRL_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place I2S control functions into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2S_SUPPORTED",
+                        "help": "whether to enable the debug log message for I2S driver.\nNote that, this option only controls the I2S driver log, will not affect other drivers.",
+                        "id": "I2S_ENABLE_DEBUG_LOG",
+                        "name": "I2S_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Enable I2S debug log",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_I2S_SUPPORTED",
+                "id": "component-config-esp-driver-i2s-configurations-C:-esp-v6.0-esp-idf-components-esp_driver_i2s-Kconfig-1",
+                "title": "ESP-Driver:I2S Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "Place Parallel IO TX ISR handler in IRAM to reduce latency caused by cache miss.",
+                        "id": "PARLIO_TX_ISR_HANDLER_IN_IRAM",
+                        "name": "PARLIO_TX_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place Parallel IO TX ISR handler in IRAM to reduce latency",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "Place Parallel IO RX ISR handler in IRAM to reduce latency caused by cache miss.",
+                        "id": "PARLIO_RX_ISR_HANDLER_IN_IRAM",
+                        "name": "PARLIO_RX_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place Parallel IO RX ISR handler in IRAM to reduce latency",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "Enable this option to allow the Parallel IO TX Interrupt Service Routine (ISR)\nto execute even when the cache is disabled. This can be useful in scenarios where the cache\nmight be turned off, but the Parallel IO TX functionality is still required to operate correctly.",
+                        "id": "PARLIO_TX_ISR_CACHE_SAFE",
+                        "name": "PARLIO_TX_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow Parallel IO TX ISR to execute when cache is disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "Enable this option to allow the Parallel IO RX Interrupt Service Routine (ISR)\nto execute even when the cache is disabled. This can be useful in scenarios where the cache\nmight be turned off, but the Parallel IO RX functionality is still required to operate correctly.",
+                        "id": "PARLIO_RX_ISR_CACHE_SAFE",
+                        "name": "PARLIO_RX_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow Parallel IO RX ISR to execute when cache is disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "This will ensure the driver object will not be allocated from a memory region\nwhere its cache can be disabled.",
+                        "id": "PARLIO_OBJ_CACHE_SAFE",
+                        "name": "PARLIO_OBJ_CACHE_SAFE",
+                        "range": null,
+                        "title": null,
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "If enabled, Parallel IO driver component will:\n1. ignore the global logging settings\n2. compile all log messages into the binary\n3. set the runtime log level to VERBOSE\nPlease enable this option by caution, as it will increase the binary size.",
+                        "id": "PARLIO_ENABLE_DEBUG_LOG",
+                        "name": "PARLIO_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Force enable debug log",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "Ensure the Parallel IO interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).",
+                        "id": "PARLIO_ISR_IRAM_SAFE",
+                        "name": "PARLIO_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "Parallel IO ISR IRAM-Safe (Deprecated)",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_PARLIO_SUPPORTED",
+                "id": "component-config-esp-driver-parallel-io-configurations-C:-esp-v6.0-esp-idf-components-esp_driver_parlio-Kconfig-1",
+                "title": "ESP-Driver:Parallel IO Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "FREERTOS_IN_IRAM && SOC_GPSPI_SUPPORTED",
+                        "help": "Normally only the ISR of SPI master is placed in the IRAM, so that it\ncan work without the flash when interrupt is triggered.\nFor other functions, there's some possibility that the flash cache\nmiss when running inside and out of SPI functions, which may increase\nthe interval of SPI transactions.\nEnable this to put ``queue_trans``, ``get_trans_result`` and\n``transmit`` functions into the IRAM to avoid possible cache miss.\n\nThis configuration won't be available if `CONFIG_FREERTOS_IN_IRAM` is disabled.\n\nDuring unit test, this is enabled to measure the ideal case of api.",
+                        "id": "SPI_MASTER_IN_IRAM",
+                        "name": "SPI_MASTER_IN_IRAM",
+                        "range": null,
+                        "title": "Place transmitting functions of SPI master into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "!HEAP_PLACE_FUNCTION_INTO_FLASH && SOC_GPSPI_SUPPORTED",
+                        "help": "Place the SPI master ISR in to IRAM to avoid possible cache miss.\n\nEnabling this configuration is possible only when HEAP_PLACE_FUNCTION_INTO_FLASH\nis disabled since the spi master uses can allocate transactions buffers into DMA\nmemory section using the heap component API that ipso facto has to be placed in IRAM.\n\nAlso you can forbid the ISR being disabled during flash writing\naccess, by add ESP_INTR_FLAG_IRAM when initializing the driver.",
+                        "id": "SPI_MASTER_ISR_IN_IRAM",
+                        "name": "SPI_MASTER_ISR_IN_IRAM",
+                        "range": null,
+                        "title": "Place SPI master ISR function into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_GPSPI_SUPPORTED",
+                        "help": "Normally only the ISR of SPI slave is placed in the IRAM, so that it\ncan work without the flash when interrupt is triggered.\nFor other functions, there is some possibility that the flash cache\nmiss when running inside and out of SPI functions, which may increase\nthe interval of SPI transactions.\nEnable this to put ``queue_trans``, ``get_trans_result`` and\n``transmit`` functions into the IRAM to avoid possible cache miss.",
+                        "id": "SPI_SLAVE_IN_IRAM",
+                        "name": "SPI_SLAVE_IN_IRAM",
+                        "range": null,
+                        "title": "Place transmitting functions of SPI slave into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_GPSPI_SUPPORTED",
+                        "help": "Place the SPI slave ISR in to IRAM to avoid possible cache miss.\n\nAlso you can forbid the ISR being disabled during flash writing\naccess, by add ESP_INTR_FLAG_IRAM when initializing the driver.",
+                        "id": "SPI_SLAVE_ISR_IN_IRAM",
+                        "name": "SPI_SLAVE_ISR_IN_IRAM",
+                        "range": null,
+                        "title": "Place SPI slave ISR function into IRAM",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_GPSPI_SUPPORTED",
+                "id": "component-config-esp-driver-spi-configurations-C:-esp-v6.0-esp-idf-components-esp_driver_spi-Kconfig-1",
+                "title": "ESP-Driver:SPI Configurations",
                 "type": "menu"
             },
             {
@@ -6685,6 +6915,74 @@
                 "depends_on": null,
                 "id": "component-config-hardware-settings-C:-esp-v6.0-esp-idf-components-esp_hw_support-Kconfig-1",
                 "title": "Hardware Settings",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_LCD_RGB_SUPPORTED",
+                        "help": "Ensure the LCD interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).\nIf you want the LCD driver to keep flushing the screen even when cache ops disabled,\nyou can enable this option. Note, this will also increase the IRAM usage.",
+                        "id": "LCD_RGB_ISR_IRAM_SAFE",
+                        "name": "LCD_RGB_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "RGB LCD ISR IRAM-Safe",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_LCD_RGB_SUPPORTED",
+                        "help": "Reset the GDMA channel every VBlank to stop permanent desyncs from happening.\nOnly need to enable it when in your application, the DMA can't deliver data\nas fast as the LCD consumes it.",
+                        "id": "LCD_RGB_RESTART_IN_VSYNC",
+                        "name": "LCD_RGB_RESTART_IN_VSYNC",
+                        "range": null,
+                        "title": "Always restart RGB LCD transmission in VSYNC",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_MIPI_DSI_SUPPORTED",
+                        "help": "Place DSI ISR handler in IRAM to reduce latency caused by cache miss.",
+                        "id": "LCD_DSI_ISR_HANDLER_IN_IRAM",
+                        "name": "LCD_DSI_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place DSI ISR handler in IRAM to reduce latency",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_MIPI_DSI_SUPPORTED",
+                        "help": "Enable this option to allow the DSI Interrupt Service Routine (ISR)\nto execute even when the cache is disabled. This can be useful in scenarios where the cache\nmight be turned off, but the DSI functionality is still required to operate correctly.",
+                        "id": "LCD_DSI_ISR_CACHE_SAFE",
+                        "name": "LCD_DSI_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow DSI ISR to execute when cache is disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_MIPI_DSI_SUPPORTED",
+                        "help": "This will ensure the DSI driver object will always be allocated in internal RAM.",
+                        "id": "LCD_DSI_OBJ_FORCE_INTERNAL",
+                        "name": "LCD_DSI_OBJ_FORCE_INTERNAL",
+                        "range": null,
+                        "title": null,
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "If enabled, LCD driver component will:\n1. ignore the global logging settings\n2. compile all log messages into the binary\n3. set the runtime log level to VERBOSE\nPlease enable this option by caution, as it will increase the binary size.",
+                        "id": "LCD_ENABLE_DEBUG_LOG",
+                        "name": "LCD_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Force enable debug log",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "id": "component-config-esp-driver-lcd-controller-configurations-C:-esp-v6.0-esp-idf-components-esp_lcd-Kconfig-1",
+                "title": "ESP-Driver:LCD Controller Configurations",
                 "type": "menu"
             },
             {

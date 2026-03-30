@@ -1,6 +1,7 @@
+#include "oled.h"
 #include "serial_link.h"
 
-#define FW_VERSION "0.1"
+#define FW_VERSION "0.2"
 
 //  Configure the UART component, send a startup banner to the
 //  browser, and from now on the serial link task will run in 
@@ -20,4 +21,10 @@ void app_main(void)
     (void)stats; //temporary cast to void, to prevent warnings.
 
     serial_link_write((const uint8_t *)startup_banner, sizeof(startup_banner) - 1U);
+
+    if (oled_init() != ESP_OK) {
+        return;
+    }
+
+    oled_show_text(0, 0, "Hello World");
 }
