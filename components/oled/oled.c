@@ -136,6 +136,13 @@ static const uint8_t s_font8x8[FONT_NUM_CHARS][FONT_CHAR_HEIGHT] = {
 // 128 pixels wide, 64 pixels tall, 1 bit per pixel = 1024 bytes.
 // Laid out in SSD1306 page order: 8 pages of 128 bytes, one byte per column,
 // LSB = topmost pixel in page.
+//
+// The framebuffer concept:
+// A copy of the display in RAM. You write to the buffer and then call flush()
+// to push the data over I2C.
+// The reason is that you need to send the whole display even if you change 
+// only one character. The buffer allows you to compose multiple changes and
+// send them all in one flush() call. 
 // ---------------------------------------------------------------------------
 
 #define FB_SIZE     (OLED_PIXEL_WIDTH * OLED_PIXEL_HEIGHT / 8)
@@ -148,7 +155,7 @@ static uint8_t s_framebuffer[FB_SIZE];
 
 static const char *TAG = "oled";
 
-static esp_lcd_panel_handle_t s_panel  = NULL;
+static esp_lcd_panel_handle_t s_panel       = NULL;
 static bool                   s_initialized = false;
 
 // ---------------------------------------------------------------------------
@@ -200,8 +207,22 @@ static void blit_char(int x, int y, char c)
 // Public API
 // ---------------------------------------------------------------------------
 
+/*
+    Oled screen abstraction explained:
+    There are three layers, each built on top of the previous.
+    - bus_handle: lowest layer - raw I2C bus, created by i2c_new_master_bus().
+      Sends bytes over I2C.
+    - io_handle: created by esp_lcd_new_panel_io_i2c(). Display-oriented I2C
+      session: has the device address, and handles the framing esp_lcd expects 
+      (command vs. data mode)
+    - s_panel: created by esp_lcd_new_panel_ssd1306. The SSD1306 driver itself: 
+      understands the SSD1306 commands - how to reset, init, etc. Exposes the 
+      esp_lcd_panel_* API (reset, init, draw_bitmap, etc.) that the app actually
+      calls.
+*/
 esp_err_t oled_init(void)
 {
+    //Prevents calling the function twice.
     if (s_initialized) {
         return ESP_OK;
     }
@@ -234,6 +255,7 @@ esp_err_t oled_init(void)
         .lcd_param_bits      = 8,
     };
 
+    //Create LCD panel IO handle
     err = esp_lcd_new_panel_io_i2c(bus_handle, &io_cfg, &io_handle);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_lcd_new_panel_io_i2c failed: %s", esp_err_to_name(err));
@@ -305,9 +327,9 @@ esp_err_t oled_show_text(int col, int row, const char *text)
         if (x + FONT_CHAR_WIDTH > OLED_PIXEL_WIDTH) {
             break;  // clip — don't wrap
         }
-        blit_char(x, y, *p);
+        blit_char(x, y, *p); //Insert text into the framebuffer.
         x += FONT_CHAR_WIDTH;
     }
 
-    return flush();
+    return flush(); //actual writing to the display.
 }
