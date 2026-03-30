@@ -62,11 +62,15 @@ CMAKE_BINARY_DIR = C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/test_runner.dir/all
+all: CMakeFiles/test_on_rx.dir/all
+all: CMakeFiles/test_serial_link.dir/all
+all: CMakeFiles/test_oled.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
-codegen: CMakeFiles/test_runner.dir/codegen
+codegen: CMakeFiles/test_on_rx.dir/codegen
+codegen: CMakeFiles/test_serial_link.dir/codegen
+codegen: CMakeFiles/test_oled.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -74,40 +78,143 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/test_runner.dir/clean
+clean: CMakeFiles/test_on_rx.dir/clean
+clean: CMakeFiles/test_serial_link.dir/clean
+clean: CMakeFiles/test_oled.dir/clean
+clean: CMakeFiles/run_all_tests.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/test_runner.dir
+# Target rules for target CMakeFiles/test_on_rx.dir
 
 # All Build rule for target.
-CMakeFiles/test_runner.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target test_runner"
-.PHONY : CMakeFiles/test_runner.dir/all
+CMakeFiles/test_on_rx.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=8,9,10,11,12,13,14 "Built target test_on_rx"
+.PHONY : CMakeFiles/test_on_rx.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/test_runner.dir/rule: cmake_check_build_system
+CMakeFiles/test_on_rx.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles 7
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/test_runner.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/test_on_rx.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles 0
-.PHONY : CMakeFiles/test_runner.dir/rule
+.PHONY : CMakeFiles/test_on_rx.dir/rule
 
 # Convenience name for target.
-test_runner: CMakeFiles/test_runner.dir/rule
-.PHONY : test_runner
+test_on_rx: CMakeFiles/test_on_rx.dir/rule
+.PHONY : test_on_rx
 
 # codegen rule for target.
-CMakeFiles/test_runner.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=1,2,3,4,5,6,7 "Finished codegen for target test_runner"
-.PHONY : CMakeFiles/test_runner.dir/codegen
+CMakeFiles/test_on_rx.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=8,9,10,11,12,13,14 "Finished codegen for target test_on_rx"
+.PHONY : CMakeFiles/test_on_rx.dir/codegen
 
 # clean rule for target.
-CMakeFiles/test_runner.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/clean
-.PHONY : CMakeFiles/test_runner.dir/clean
+CMakeFiles/test_on_rx.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/clean
+.PHONY : CMakeFiles/test_on_rx.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_serial_link.dir
+
+# All Build rule for target.
+CMakeFiles/test_serial_link.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=15,16,17,18,19,20,21 "Built target test_serial_link"
+.PHONY : CMakeFiles/test_serial_link.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_serial_link.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles 7
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/test_serial_link.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles 0
+.PHONY : CMakeFiles/test_serial_link.dir/rule
+
+# Convenience name for target.
+test_serial_link: CMakeFiles/test_serial_link.dir/rule
+.PHONY : test_serial_link
+
+# codegen rule for target.
+CMakeFiles/test_serial_link.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=15,16,17,18,19,20,21 "Finished codegen for target test_serial_link"
+.PHONY : CMakeFiles/test_serial_link.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_serial_link.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/clean
+.PHONY : CMakeFiles/test_serial_link.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_oled.dir
+
+# All Build rule for target.
+CMakeFiles/test_oled.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=2,3,4,5,6,7 "Built target test_oled"
+.PHONY : CMakeFiles/test_oled.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_oled.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles 6
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/test_oled.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles 0
+.PHONY : CMakeFiles/test_oled.dir/rule
+
+# Convenience name for target.
+test_oled: CMakeFiles/test_oled.dir/rule
+.PHONY : test_oled
+
+# codegen rule for target.
+CMakeFiles/test_oled.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=2,3,4,5,6,7 "Finished codegen for target test_oled"
+.PHONY : CMakeFiles/test_oled.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_oled.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/clean
+.PHONY : CMakeFiles/test_oled.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/run_all_tests.dir
+
+# All Build rule for target.
+CMakeFiles/run_all_tests.dir/all: CMakeFiles/test_on_rx.dir/all
+CMakeFiles/run_all_tests.dir/all: CMakeFiles/test_serial_link.dir/all
+CMakeFiles/run_all_tests.dir/all: CMakeFiles/test_oled.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\run_all_tests.dir\build.make CMakeFiles/run_all_tests.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\run_all_tests.dir\build.make CMakeFiles/run_all_tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=1 "Built target run_all_tests"
+.PHONY : CMakeFiles/run_all_tests.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/run_all_tests.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles 21
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/run_all_tests.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles 0
+.PHONY : CMakeFiles/run_all_tests.dir/rule
+
+# Convenience name for target.
+run_all_tests: CMakeFiles/run_all_tests.dir/rule
+.PHONY : run_all_tests
+
+# codegen rule for target.
+CMakeFiles/run_all_tests.dir/codegen: CMakeFiles/test_on_rx.dir/all
+CMakeFiles/run_all_tests.dir/codegen: CMakeFiles/test_serial_link.dir/all
+CMakeFiles/run_all_tests.dir/codegen: CMakeFiles/test_oled.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\run_all_tests.dir\build.make CMakeFiles/run_all_tests.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\ranle\Downloads\ESP32_Screen_Controller\tests\build\CMakeFiles --progress-num=1 "Finished codegen for target run_all_tests"
+.PHONY : CMakeFiles/run_all_tests.dir/codegen
+
+# clean rule for target.
+CMakeFiles/run_all_tests.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\run_all_tests.dir\build.make CMakeFiles/run_all_tests.dir/clean
+.PHONY : CMakeFiles/run_all_tests.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

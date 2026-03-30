@@ -116,24 +116,111 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test_runner
+# Target rules for targets named test_on_rx
 
 # Build rule for target.
-test_runner: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test_runner
-.PHONY : test_runner
+test_on_rx: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test_on_rx
+.PHONY : test_on_rx
 
 # fast build rule for target.
-test_runner/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/build
-.PHONY : test_runner/fast
+test_on_rx/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/build
+.PHONY : test_on_rx/fast
+
+#=============================================================================
+# Target rules for targets named test_serial_link
+
+# Build rule for target.
+test_serial_link: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test_serial_link
+.PHONY : test_serial_link
+
+# fast build rule for target.
+test_serial_link/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/build
+.PHONY : test_serial_link/fast
+
+#=============================================================================
+# Target rules for targets named test_oled
+
+# Build rule for target.
+test_oled: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test_oled
+.PHONY : test_oled
+
+# fast build rule for target.
+test_oled/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/build
+.PHONY : test_oled/fast
+
+#=============================================================================
+# Target rules for targets named run_all_tests
+
+# Build rule for target.
+run_all_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 run_all_tests
+.PHONY : run_all_tests
+
+# fast build rule for target.
+run_all_tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\run_all_tests.dir\build.make CMakeFiles/run_all_tests.dir/build
+.PHONY : run_all_tests/fast
+
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.obj: C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.obj
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.obj
+
+# target to build an object file
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.obj
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.obj
+
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.i: C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.i
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.i
+
+# target to preprocess a source file
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.i
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.i
+
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.s: C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.s
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.s
+
+# target to generate assembly for a file
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.s
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.c.s
+
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.obj: C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.obj
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.obj
+
+# target to build an object file
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.obj
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.obj
+
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.i: C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.i
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.i
+
+# target to preprocess a source file
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.i
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.i
+
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.s: C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.s
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.s
+
+# target to generate assembly for a file
+C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.s
+.PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.c.s
 
 C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.obj: C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj
 .PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.obj
 
 # target to build an object file
 C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj
 .PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj
 
 C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.i: C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.i
@@ -141,7 +228,7 @@ C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.i: C_/Users/ranle/Dow
 
 # target to preprocess a source file
 C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.i
 .PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.i
 
 C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.s: C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.s
@@ -149,15 +236,41 @@ C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.s: C_/Users/ranle/Dow
 
 # target to generate assembly for a file
 C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.s
 .PHONY : C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.s
+
+stubs/esp_lcd_stubs.obj: stubs/esp_lcd_stubs.c.obj
+.PHONY : stubs/esp_lcd_stubs.obj
+
+# target to build an object file
+stubs/esp_lcd_stubs.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/stubs/esp_lcd_stubs.c.obj
+.PHONY : stubs/esp_lcd_stubs.c.obj
+
+stubs/esp_lcd_stubs.i: stubs/esp_lcd_stubs.c.i
+.PHONY : stubs/esp_lcd_stubs.i
+
+# target to preprocess a source file
+stubs/esp_lcd_stubs.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/stubs/esp_lcd_stubs.c.i
+.PHONY : stubs/esp_lcd_stubs.c.i
+
+stubs/esp_lcd_stubs.s: stubs/esp_lcd_stubs.c.s
+.PHONY : stubs/esp_lcd_stubs.s
+
+# target to generate assembly for a file
+stubs/esp_lcd_stubs.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/stubs/esp_lcd_stubs.c.s
+.PHONY : stubs/esp_lcd_stubs.c.s
 
 stubs/esp_stubs.obj: stubs/esp_stubs.c.obj
 .PHONY : stubs/esp_stubs.obj
 
 # target to build an object file
 stubs/esp_stubs.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/stubs/esp_stubs.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/esp_stubs.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/esp_stubs.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/stubs/esp_stubs.c.obj
 .PHONY : stubs/esp_stubs.c.obj
 
 stubs/esp_stubs.i: stubs/esp_stubs.c.i
@@ -165,7 +278,9 @@ stubs/esp_stubs.i: stubs/esp_stubs.c.i
 
 # target to preprocess a source file
 stubs/esp_stubs.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/stubs/esp_stubs.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/esp_stubs.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/esp_stubs.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/stubs/esp_stubs.c.i
 .PHONY : stubs/esp_stubs.c.i
 
 stubs/esp_stubs.s: stubs/esp_stubs.c.s
@@ -173,15 +288,41 @@ stubs/esp_stubs.s: stubs/esp_stubs.c.s
 
 # target to generate assembly for a file
 stubs/esp_stubs.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/stubs/esp_stubs.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/esp_stubs.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/esp_stubs.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/stubs/esp_stubs.c.s
 .PHONY : stubs/esp_stubs.c.s
+
+stubs/freertos_stubs.obj: stubs/freertos_stubs.c.obj
+.PHONY : stubs/freertos_stubs.obj
+
+# target to build an object file
+stubs/freertos_stubs.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/freertos_stubs.c.obj
+.PHONY : stubs/freertos_stubs.c.obj
+
+stubs/freertos_stubs.i: stubs/freertos_stubs.c.i
+.PHONY : stubs/freertos_stubs.i
+
+# target to preprocess a source file
+stubs/freertos_stubs.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/freertos_stubs.c.i
+.PHONY : stubs/freertos_stubs.c.i
+
+stubs/freertos_stubs.s: stubs/freertos_stubs.c.s
+.PHONY : stubs/freertos_stubs.s
+
+# target to generate assembly for a file
+stubs/freertos_stubs.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/freertos_stubs.c.s
+.PHONY : stubs/freertos_stubs.c.s
 
 stubs/oled_stub.obj: stubs/oled_stub.c.obj
 .PHONY : stubs/oled_stub.obj
 
 # target to build an object file
 stubs/oled_stub.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/stubs/oled_stub.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.obj
 .PHONY : stubs/oled_stub.c.obj
 
 stubs/oled_stub.i: stubs/oled_stub.c.i
@@ -189,7 +330,7 @@ stubs/oled_stub.i: stubs/oled_stub.c.i
 
 # target to preprocess a source file
 stubs/oled_stub.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/stubs/oled_stub.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.i
 .PHONY : stubs/oled_stub.c.i
 
 stubs/oled_stub.s: stubs/oled_stub.c.s
@@ -197,7 +338,7 @@ stubs/oled_stub.s: stubs/oled_stub.c.s
 
 # target to generate assembly for a file
 stubs/oled_stub.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/stubs/oled_stub.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.s
 .PHONY : stubs/oled_stub.c.s
 
 stubs/serial_link_stub.obj: stubs/serial_link_stub.c.obj
@@ -205,7 +346,7 @@ stubs/serial_link_stub.obj: stubs/serial_link_stub.c.obj
 
 # target to build an object file
 stubs/serial_link_stub.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/stubs/serial_link_stub.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/serial_link_stub.c.obj
 .PHONY : stubs/serial_link_stub.c.obj
 
 stubs/serial_link_stub.i: stubs/serial_link_stub.c.i
@@ -213,7 +354,7 @@ stubs/serial_link_stub.i: stubs/serial_link_stub.c.i
 
 # target to preprocess a source file
 stubs/serial_link_stub.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/stubs/serial_link_stub.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/serial_link_stub.c.i
 .PHONY : stubs/serial_link_stub.c.i
 
 stubs/serial_link_stub.s: stubs/serial_link_stub.c.s
@@ -221,15 +362,63 @@ stubs/serial_link_stub.s: stubs/serial_link_stub.c.s
 
 # target to generate assembly for a file
 stubs/serial_link_stub.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/stubs/serial_link_stub.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/serial_link_stub.c.s
 .PHONY : stubs/serial_link_stub.c.s
+
+stubs/uart_stubs.obj: stubs/uart_stubs.c.obj
+.PHONY : stubs/uart_stubs.obj
+
+# target to build an object file
+stubs/uart_stubs.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/uart_stubs.c.obj
+.PHONY : stubs/uart_stubs.c.obj
+
+stubs/uart_stubs.i: stubs/uart_stubs.c.i
+.PHONY : stubs/uart_stubs.i
+
+# target to preprocess a source file
+stubs/uart_stubs.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/uart_stubs.c.i
+.PHONY : stubs/uart_stubs.c.i
+
+stubs/uart_stubs.s: stubs/uart_stubs.c.s
+.PHONY : stubs/uart_stubs.s
+
+# target to generate assembly for a file
+stubs/uart_stubs.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/uart_stubs.c.s
+.PHONY : stubs/uart_stubs.c.s
+
+test_oled.obj: test_oled.c.obj
+.PHONY : test_oled.obj
+
+# target to build an object file
+test_oled.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/test_oled.c.obj
+.PHONY : test_oled.c.obj
+
+test_oled.i: test_oled.c.i
+.PHONY : test_oled.i
+
+# target to preprocess a source file
+test_oled.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/test_oled.c.i
+.PHONY : test_oled.c.i
+
+test_oled.s: test_oled.c.s
+.PHONY : test_oled.s
+
+# target to generate assembly for a file
+test_oled.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/test_oled.c.s
+.PHONY : test_oled.c.s
 
 test_on_rx.obj: test_on_rx.c.obj
 .PHONY : test_on_rx.obj
 
 # target to build an object file
 test_on_rx.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/test_on_rx.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/test_on_rx.c.obj
 .PHONY : test_on_rx.c.obj
 
 test_on_rx.i: test_on_rx.c.i
@@ -237,7 +426,7 @@ test_on_rx.i: test_on_rx.c.i
 
 # target to preprocess a source file
 test_on_rx.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/test_on_rx.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/test_on_rx.c.i
 .PHONY : test_on_rx.c.i
 
 test_on_rx.s: test_on_rx.c.s
@@ -245,15 +434,41 @@ test_on_rx.s: test_on_rx.c.s
 
 # target to generate assembly for a file
 test_on_rx.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/test_on_rx.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/test_on_rx.c.s
 .PHONY : test_on_rx.c.s
+
+test_serial_link.obj: test_serial_link.c.obj
+.PHONY : test_serial_link.obj
+
+# target to build an object file
+test_serial_link.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/test_serial_link.c.obj
+.PHONY : test_serial_link.c.obj
+
+test_serial_link.i: test_serial_link.c.i
+.PHONY : test_serial_link.i
+
+# target to preprocess a source file
+test_serial_link.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/test_serial_link.c.i
+.PHONY : test_serial_link.c.i
+
+test_serial_link.s: test_serial_link.c.s
+.PHONY : test_serial_link.s
+
+# target to generate assembly for a file
+test_serial_link.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/test_serial_link.c.s
+.PHONY : test_serial_link.c.s
 
 unity/unity.obj: unity/unity.c.obj
 .PHONY : unity/unity.obj
 
 # target to build an object file
 unity/unity.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/unity/unity.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/unity/unity.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/unity/unity.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/unity/unity.c.obj
 .PHONY : unity/unity.c.obj
 
 unity/unity.i: unity/unity.c.i
@@ -261,7 +476,9 @@ unity/unity.i: unity/unity.c.i
 
 # target to preprocess a source file
 unity/unity.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/unity/unity.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/unity/unity.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/unity/unity.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/unity/unity.c.i
 .PHONY : unity/unity.c.i
 
 unity/unity.s: unity/unity.c.s
@@ -269,7 +486,9 @@ unity/unity.s: unity/unity.c.s
 
 # target to generate assembly for a file
 unity/unity.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_runner.dir\build.make CMakeFiles/test_runner.dir/unity/unity.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/unity/unity.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/unity/unity.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_oled.dir\build.make CMakeFiles/test_oled.dir/unity/unity.c.s
 .PHONY : unity/unity.c.s
 
 # Help Target
@@ -280,22 +499,46 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... test_runner
+	@echo ... run_all_tests
+	@echo ... test_oled
+	@echo ... test_on_rx
+	@echo ... test_serial_link
+	@echo ... C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.obj
+	@echo ... C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.i
+	@echo ... C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/oled.s
+	@echo ... C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.obj
+	@echo ... C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.i
+	@echo ... C_/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/serial_link.s
 	@echo ... C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.obj
 	@echo ... C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.i
 	@echo ... C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.s
+	@echo ... stubs/esp_lcd_stubs.obj
+	@echo ... stubs/esp_lcd_stubs.i
+	@echo ... stubs/esp_lcd_stubs.s
 	@echo ... stubs/esp_stubs.obj
 	@echo ... stubs/esp_stubs.i
 	@echo ... stubs/esp_stubs.s
+	@echo ... stubs/freertos_stubs.obj
+	@echo ... stubs/freertos_stubs.i
+	@echo ... stubs/freertos_stubs.s
 	@echo ... stubs/oled_stub.obj
 	@echo ... stubs/oled_stub.i
 	@echo ... stubs/oled_stub.s
 	@echo ... stubs/serial_link_stub.obj
 	@echo ... stubs/serial_link_stub.i
 	@echo ... stubs/serial_link_stub.s
+	@echo ... stubs/uart_stubs.obj
+	@echo ... stubs/uart_stubs.i
+	@echo ... stubs/uart_stubs.s
+	@echo ... test_oled.obj
+	@echo ... test_oled.i
+	@echo ... test_oled.s
 	@echo ... test_on_rx.obj
 	@echo ... test_on_rx.i
 	@echo ... test_on_rx.s
+	@echo ... test_serial_link.obj
+	@echo ... test_serial_link.i
+	@echo ... test_serial_link.s
 	@echo ... unity/unity.obj
 	@echo ... unity/unity.i
 	@echo ... unity/unity.s

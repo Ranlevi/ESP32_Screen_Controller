@@ -59,9 +59,9 @@ The system is expected to support the following user-visible capabilities:
 
 ## General Instructions
 
-This is a showcase project, not a quick prototype. All work should favor clarity, robustness, and demonstrable engineering quality over shortcuts.
+1. This is a showcase project, not a quick prototype. All work should favor clarity, robustness, and demonstrable engineering quality over shortcuts.
 
-When making implementation decisions, prefer approaches that visibly communicate:
+2. When making implementation decisions, prefer approaches that visibly communicate:
 
 - Strong embedded systems fundamentals.
 - Clean modular architecture.
@@ -72,4 +72,6 @@ When making implementation decisions, prefer approaches that visibly communicate
 - Thoughtful tradeoff analysis.
 - Good documentation.
 
-# 
+3. Never modify the contents of the /tests folder, unless the user explicitly
+   approves modifying the tests. Rational: to prevent modifying the tests as
+   a way of masking problems or errors with the code.

@@ -4,6 +4,32 @@
 #include <stdint.h>
 #include <string.h>
 
+/*
+    Test Infrastructure notes:
+    ESP-IDF has a built-in test framework, but it is meant to run on the the
+    target device only: we want to test the logic on the PC Host.
+    There's also a Linux target which runs the FW as a native Linux Binary,
+    but that's an overkill for our simple app.
+    
+    Solution: we'll create a standalone Unity framework, with simple stubs 
+    to simulate ESP-IDF functions the code calls. Reason: Unity is simple
+    (2 c files), and stubs are minimal. The apps code compiles unchanged
+    against the stubs.
+
+    To run the tests: cd to /tests
+    cd tests
+    cmake -B build -G "MinGW Makefiles"
+    cmake --build build
+
+    # Run individually:
+    ./build/test_on_rx.exe
+    ./build/test_serial_link.exe
+    ./build/test_oled.exe
+
+    # Or all at once:
+    cmake --build build --target run_all_tests    
+*/
+
 //  Functions under test (defined in main/main.c)
 void on_rx(const uint8_t *data, size_t len);
 void on_rx_reset(void);

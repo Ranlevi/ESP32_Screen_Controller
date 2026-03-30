@@ -51,5 +51,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/test_runner.dir/DependInfo.cmake"
+  "CMakeFiles/test_on_rx.dir/DependInfo.cmake"
+  "CMakeFiles/test_serial_link.dir/DependInfo.cmake"
+  "CMakeFiles/test_oled.dir/DependInfo.cmake"
+  "CMakeFiles/run_all_tests.dir/DependInfo.cmake"
   )
