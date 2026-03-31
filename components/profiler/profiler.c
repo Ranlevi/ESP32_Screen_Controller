@@ -16,10 +16,28 @@ static const char *TAG = "profiler";
 
 static profiler_cfg_t s_cfg;
 static bool           s_initialized = false;
+static char           s_oled_key[32] = "";
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+static const char *reset_reason_str(int r)
+{
+    switch (r) {
+        case 1:  return "Power On";
+        case 2:  return "Ext Pin";
+        case 3:  return "Software";
+        case 4:  return "Panic";
+        case 5:  return "Int WDT";
+        case 6:  return "Task WDT";
+        case 7:  return "WDT";
+        case 8:  return "Deep Sleep";
+        case 9:  return "Brownout";
+        case 10: return "SDIO";
+        default: return "Unknown";
+    }
+}
 
 //  Copies src into dst as a JSON-safe string (no surrounding quotes).
 //  Escapes \n → \n, \t → \t, \r → (dropped), " → \", \ → \\.
@@ -110,6 +128,60 @@ static void profiler_task(void *arg)
 
         send(sys_buf, n);
 
+        // --- OLED stat display ---
+        if (s_cfg.oled_fn && s_oled_key[0] != '\0') {
+            char oled_label[17];
+            char oled_value[17];
+
+            if (strcmp(s_oled_key, "uptime_s") == 0) {
+                uint32_t h = uptime_s / 3600;
+                uint32_t m = (uptime_s % 3600) / 60;
+                uint32_t s = uptime_s % 60;
+                snprintf(oled_label, sizeof(oled_label), "Uptime");
+                snprintf(oled_value, sizeof(oled_value), "%02lu:%02lu:%02lu",
+                         (unsigned long)h, (unsigned long)m, (unsigned long)s);
+            } else if (strcmp(s_oled_key, "free_heap_b") == 0) {
+                snprintf(oled_label, sizeof(oled_label), "Free Heap");
+                snprintf(oled_value, sizeof(oled_value), "%lu.%lu KB",
+                         (unsigned long)(free_heap / 1024),
+                         (unsigned long)((free_heap % 1024) * 10 / 1024));
+            } else if (strcmp(s_oled_key, "min_free_heap_b") == 0) {
+                snprintf(oled_label, sizeof(oled_label), "Min Heap");
+                snprintf(oled_value, sizeof(oled_value), "%lu.%lu KB",
+                         (unsigned long)(min_free_heap / 1024),
+                         (unsigned long)((min_free_heap % 1024) * 10 / 1024));
+            } else if (strcmp(s_oled_key, "task_count") == 0) {
+                snprintf(oled_label, sizeof(oled_label), "Tasks");
+                snprintf(oled_value, sizeof(oled_value), "%lu", (unsigned long)task_count);
+            } else if (strcmp(s_oled_key, "reset_reason") == 0) {
+                snprintf(oled_label, sizeof(oled_label), "Reset Reason");
+                snprintf(oled_value, sizeof(oled_value), "%s", reset_reason_str(reset_reason));
+            } else if (strcmp(s_oled_key, "cpu_freq_mhz") == 0) {
+                snprintf(oled_label, sizeof(oled_label), "CPU Freq");
+                snprintf(oled_value, sizeof(oled_value), "%d MHz", CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ);
+            } else if (strcmp(s_oled_key, "idf_version") == 0) {
+                snprintf(oled_label, sizeof(oled_label), "IDF Version");
+                snprintf(oled_value, sizeof(oled_value), "%s", IDF_VER);
+            } else if (strcmp(s_oled_key, "bytes_rx") == 0) {
+                snprintf(oled_label, sizeof(oled_label), "Serial RX");
+                snprintf(oled_value, sizeof(oled_value), "%lu.%lu KB",
+                         (unsigned long)(bytes_rx / 1024),
+                         (unsigned long)((bytes_rx % 1024) * 10 / 1024));
+            } else if (strcmp(s_oled_key, "bytes_tx") == 0) {
+                snprintf(oled_label, sizeof(oled_label), "Serial TX");
+                snprintf(oled_value, sizeof(oled_value), "%lu.%lu KB",
+                         (unsigned long)(bytes_tx / 1024),
+                         (unsigned long)((bytes_tx % 1024) * 10 / 1024));
+            } else {
+                oled_label[0] = '\0';
+                oled_value[0] = '\0';
+            }
+
+            if (oled_label[0] != '\0') {
+                s_cfg.oled_fn(oled_label, oled_value);
+            }
+        }
+
         // --- task runtime stats JSON ---
         //  vTaskGetRunTimeStats requires CONFIG_FREERTOS_GENERATE_RUN_TIME_STATS=y.
         //  It writes a plain-text table (tab-separated, newline-delimited) into the
@@ -159,4 +231,14 @@ esp_err_t profiler_init(const profiler_cfg_t *cfg)
     s_initialized = true;
     ESP_LOGI(TAG, "started (interval %lu ms)", (unsigned long)s_cfg.interval_ms);
     return ESP_OK;
+}
+
+void profiler_set_oled_stat(const char *key)
+{
+    if (key == NULL) {
+        s_oled_key[0] = '\0';
+        return;
+    }
+    strncpy(s_oled_key, key, sizeof(s_oled_key) - 1);
+    s_oled_key[sizeof(s_oled_key) - 1] = '\0';
 }

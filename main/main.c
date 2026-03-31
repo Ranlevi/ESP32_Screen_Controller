@@ -5,14 +5,20 @@
 #include "profiler.h"
 #include "serial_link.h"
 
-#define FW_VERSION "0.4"
+#define OLED_CMD_PREFIX     "OLED:"
+#define OLED_CMD_PREFIX_LEN (sizeof(OLED_CMD_PREFIX) - 1)
+
+#define FW_VERSION "0.5"
 
 // 128px wide / 8px per char = 16 characters per row
 #define DISPLAY_COLS 16
 
+//  Large enough for the longest OLED command key (e.g. "OLED:min_free_heap_b" = 20 chars)
+#define LINE_BUF_LEN 32
+
 static const char *TAG = "main";
 
-static char   s_line_buf[DISPLAY_COLS + 1];
+static char   s_line_buf[LINE_BUF_LEN + 1];
 static size_t s_line_len = 0;
 
 //  Accumulates received bytes into a line buffer.
@@ -28,23 +34,32 @@ void on_rx(const uint8_t *data, size_t len)
 
         if (c == '\n') {
             s_line_buf[s_line_len] = '\0';
-            esp_err_t err = oled_clear();
-            if (err != ESP_OK) {
-                ESP_LOGW(TAG, "oled_clear failed: %s", esp_err_to_name(err));
+
+            if (strncmp(s_line_buf, OLED_CMD_PREFIX, OLED_CMD_PREFIX_LEN) == 0) {
+                profiler_set_oled_stat(s_line_buf + OLED_CMD_PREFIX_LEN);
+            } else {
+                esp_err_t err = oled_clear();
+                if (err != ESP_OK) {
+                    ESP_LOGW(TAG, "oled_clear failed: %s", esp_err_to_name(err));
+                }
+                err = oled_show_text(0, 0, s_line_buf);
+                if (err != ESP_OK) {
+                    ESP_LOGW(TAG, "oled_show_text failed: %s", esp_err_to_name(err));
+                }
             }
-            err = oled_show_text(0, 0, s_line_buf);
-            if (err != ESP_OK) {
-                ESP_LOGW(TAG, "oled_show_text failed: %s", esp_err_to_name(err));
-            }
+
             s_line_len = 0;
             continue;
         }
 
-        if (s_line_len < DISPLAY_COLS) {
+        if (s_line_len < LINE_BUF_LEN) {
             s_line_buf[s_line_len++] = c;
         }
 
-        if (s_line_len >= DISPLAY_COLS) {
+        //  Flush display text when the row is full — but not if the buffer is
+        //  accumulating an OLED: command (those may be longer than DISPLAY_COLS).
+        if (s_line_len >= DISPLAY_COLS &&
+            strncmp(s_line_buf, OLED_CMD_PREFIX, OLED_CMD_PREFIX_LEN) != 0) {
             s_line_buf[s_line_len] = '\0';
             esp_err_t err = oled_clear();
             if (err != ESP_OK) {
@@ -64,6 +79,15 @@ void on_rx_reset(void)
 {
     s_line_len = 0;
     s_line_buf[0] = '\0';
+}
+
+//  Displays a stat on the OLED: label on the top row, value on the bottom row.
+//  Called from the profiler task every interval when a stat is selected.
+static void oled_display_stat(const char *label, const char *value)
+{
+    oled_clear();
+    oled_show_text(0,  0, label);
+    oled_show_text(0, 32, value);
 }
 
 //  Configure the UART component, send a startup banner to the
@@ -91,7 +115,8 @@ void app_main(void)
     oled_show_text(0, 0, "Hello World");
 
     profiler_cfg_t profiler_cfg = PROFILER_DEFAULT_CONFIG();
-    profiler_cfg.write_fn    = serial_link_write;
+    profiler_cfg.write_fn     = serial_link_write;
     profiler_cfg.serial_stats = stats;
+    profiler_cfg.oled_fn      = oled_display_stat;
     profiler_init(&profiler_cfg);
 }

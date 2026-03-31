@@ -107,6 +107,22 @@ void test_multiple_lines(void)
     TEST_ASSERT_EQUAL_STRING("second", stub_last_text());
 }
 
+void test_oled_command_does_not_update_display(void)
+{
+    //  OLED: prefix is a command — should not call oled_show_text
+    send("OLED:free_heap_b\n");
+    TEST_ASSERT_EQUAL_STRING("", stub_last_text());
+    TEST_ASSERT_EQUAL_INT(0, stub_clear_count());
+}
+
+void test_oled_command_followed_by_normal_line(void)
+{
+    //  After an OLED: command a normal line should still display as usual
+    send("OLED:uptime_s\n");
+    send("hello\n");
+    TEST_ASSERT_EQUAL_STRING("hello", stub_last_text());
+}
+
 // ---------------------------------------------------------------------------
 
 int main(void)
@@ -120,5 +136,7 @@ int main(void)
     RUN_TEST(test_overflow_char_starts_next_line);
     RUN_TEST(test_empty_line);
     RUN_TEST(test_multiple_lines);
+    RUN_TEST(test_oled_command_does_not_update_display);
+    RUN_TEST(test_oled_command_followed_by_normal_line);
     return UNITY_END();
 }
