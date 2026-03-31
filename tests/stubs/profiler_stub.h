@@ -10,6 +10,7 @@ typedef struct {
     profiler_write_fn_t        write_fn;
     const serial_link_stats_t *serial_stats;
     profiler_oled_fn_t         oled_fn;
+    const char                *fw_version;
     unsigned int               interval_ms;
     int                        task_stack_size;
     int                        task_priority;
@@ -19,6 +20,7 @@ typedef struct {
     .write_fn        = NULL,                         \
     .serial_stats    = NULL,                         \
     .oled_fn         = NULL,                         \
+    .fw_version      = NULL,                         \
     .interval_ms     = 2000,                         \
     .task_stack_size = 3072,                         \
     .task_priority   = 1,                            \

@@ -115,6 +115,7 @@ static void profiler_task(void *arg)
             "{\"uptime_s\":%lu,\"free_heap_b\":%lu,\"min_free_heap_b\":%lu,"
             "\"task_count\":%lu,\"reset_reason\":%d,"
             "\"cpu_freq_mhz\":%d,\"idf_version\":\"%s\","
+            "\"fw_version\":\"%s\","
             "\"bytes_rx\":%lu,\"bytes_tx\":%lu}\r\n",
             (unsigned long)uptime_s,
             (unsigned long)free_heap,
@@ -123,6 +124,7 @@ static void profiler_task(void *arg)
             reset_reason,
             CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ,
             IDF_VER,
+            s_cfg.fw_version ? s_cfg.fw_version : "",
             (unsigned long)bytes_rx,
             (unsigned long)bytes_tx);
 
@@ -162,6 +164,10 @@ static void profiler_task(void *arg)
             } else if (strcmp(s_oled_key, "idf_version") == 0) {
                 snprintf(oled_label, sizeof(oled_label), "IDF Version");
                 snprintf(oled_value, sizeof(oled_value), "%s", IDF_VER);
+            } else if (strcmp(s_oled_key, "fw_version") == 0) {
+                snprintf(oled_label, sizeof(oled_label), "FW Version");
+                snprintf(oled_value, sizeof(oled_value), "%s",
+                         s_cfg.fw_version ? s_cfg.fw_version : "");
             } else if (strcmp(s_oled_key, "bytes_rx") == 0) {
                 snprintf(oled_label, sizeof(oled_label), "Serial RX");
                 snprintf(oled_value, sizeof(oled_value), "%lu.%lu KB",

@@ -20,6 +20,7 @@ typedef struct {
     profiler_write_fn_t        write_fn;      // required — called with each JSON report
     const serial_link_stats_t *serial_stats;  // optional — NULL to omit bytes_rx/tx
     profiler_oled_fn_t         oled_fn;       // optional — NULL to disable OLED updates
+    const char                *fw_version;    // optional — NULL to omit from JSON
     uint32_t                   interval_ms;   // report interval, must be > 0
     int                        task_stack_size;
     int                        task_priority;
@@ -31,6 +32,7 @@ typedef struct {
     .write_fn        = NULL,                          \
     .serial_stats    = NULL,                          \
     .oled_fn         = NULL,                          \
+    .fw_version      = NULL,                          \
     .interval_ms     = 2000,                          \
     .task_stack_size = 3072,                          \
     .task_priority   = 1,                             \

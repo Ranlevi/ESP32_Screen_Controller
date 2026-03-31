@@ -118,5 +118,6 @@ void app_main(void)
     profiler_cfg.write_fn     = serial_link_write;
     profiler_cfg.serial_stats = stats;
     profiler_cfg.oled_fn      = oled_display_stat;
+    profiler_cfg.fw_version   = FW_VERSION;
     profiler_init(&profiler_cfg);
 }
