@@ -8,6 +8,7 @@ CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_err.h \
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_log.h \
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/FreeRTOS.h \
+  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/semphr.h \
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/profiler.h \
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/profiler_stub.h \
   C:/msys64/mingw64/include/_mingw.h \
@@ -44,6 +45,23 @@ CMakeFiles/test_on_rx.dir/stubs/esp_stubs.c.obj: C:/Users/ranle/Downloads/ESP32_
   C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_err.h
 
+CMakeFiles/test_on_rx.dir/stubs/freertos_stubs.c.obj: C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos_stubs.c \
+  C:/msys64/mingw64/include/_mingw.h \
+  C:/msys64/mingw64/include/_mingw_mac.h \
+  C:/msys64/mingw64/include/_mingw_secapi.h \
+  C:/msys64/mingw64/include/corecrt.h \
+  C:/msys64/mingw64/include/crtdefs.h \
+  C:/msys64/mingw64/include/sdks/_mingw_ddk.h \
+  C:/msys64/mingw64/include/stddef.h \
+  C:/msys64/mingw64/include/stdint.h \
+  C:/msys64/mingw64/include/vadefs.h \
+  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdbool.h \
+  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stddef.h \
+  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \
+  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/FreeRTOS.h \
+  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/semphr.h \
+  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/task.h
+
 CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.obj: C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/oled_stub.c \
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/include/oled.h \
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_err.h \
@@ -63,9 +81,6 @@ CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.obj: C:/Users/ranle/Downloads/ESP32_
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/oled_stub.h
 
 CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj: C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/profiler_stub.c \
-  C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/include/serial_link.h \
-  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/driver/uart.h \
-  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/FreeRTOS.h \
   C:/msys64/mingw64/include/_mingw.h \
   C:/msys64/mingw64/include/_mingw_mac.h \
   C:/msys64/mingw64/include/_mingw_secapi.h \
@@ -75,7 +90,6 @@ CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj: C:/Users/ranle/Downloads/ES
   C:/msys64/mingw64/include/stddef.h \
   C:/msys64/mingw64/include/stdint.h \
   C:/msys64/mingw64/include/vadefs.h \
-  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdbool.h \
   C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stddef.h \
   C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_err.h \
@@ -159,13 +173,19 @@ C:/msys64/mingw64/include/setjmp.h:
 
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/unity/unity_internals.h:
 
-C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/serial_link_stub.c:
-
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/profiler_stub.c:
 
 C:/msys64/mingw64/include/limits.h:
 
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/oled_stub.c:
+
+C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/serial_link_stub.c:
+
+C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/task.h:
+
+C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_stubs.c:
+
+C:/msys64/mingw64/include/_mingw_off_t.h:
 
 C:/msys64/mingw64/include/sdks/_mingw_ddk.h:
 
@@ -173,21 +193,17 @@ C:/msys64/mingw64/include/stdint.h:
 
 C:/msys64/mingw64/include/vadefs.h:
 
-C:/msys64/mingw64/include/_mingw_off_t.h:
+C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/semphr.h:
 
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/FreeRTOS.h:
-
-C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_stubs.c:
-
-C:/msys64/mingw64/include/_mingw_secapi.h:
-
-C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdbool.h:
 
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/profiler.h:
 
 C:/msys64/mingw64/include/sec_api/stdio_s.h:
 
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_log.h:
+
+C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos_stubs.c:
 
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/oled/include/oled.h:
 
@@ -200,6 +216,10 @@ C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/include/
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c:
 
 C:/msys64/mingw64/include/corecrt.h:
+
+C:/msys64/mingw64/include/_mingw_secapi.h:
+
+C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdbool.h:
 
 C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_err.h:
 

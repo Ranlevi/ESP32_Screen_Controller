@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(echo \"$IDF_PATH\")"
+      "Bash(echo \"$IDF_PATH\")",
+      "Bash(cmake -B build -G \"MinGW Makefiles\" -Wno-dev)",
+      "Bash(cmake --build build)",
+      "Bash(./build/test_on_rx.exe)",
+      "Bash(./build/test_serial_link.exe)",
+      "Bash(./build/test_oled.exe)",
+      "Bash(./build/test_profiler.exe)"
     ]
   }
 }

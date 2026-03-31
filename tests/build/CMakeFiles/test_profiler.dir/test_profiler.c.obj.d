@@ -23,10 +23,6 @@ CMakeFiles/test_profiler.dir/test_profiler.c.obj: \
  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/profiler.h \
  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/profiler_stub.h \
  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_err.h \
- C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/include/serial_link.h \
- C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/driver/uart.h \
- C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/FreeRTOS.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdbool.h \
  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/profiler_test_access.h \
  C:/msys64/mingw64/include/string.h \
  C:/msys64/mingw64/include/sec_api/string_s.h

@@ -6,7 +6,7 @@
 #include "driver/uart.h"
 #include "esp_err.h"
 
-typedef struct {
+typedef struct serial_link_stats_s {
     uint32_t bytes_rx;
     uint32_t bytes_tx;
     uint32_t rx_overflow_events;

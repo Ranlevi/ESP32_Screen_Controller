@@ -10,8 +10,4 @@ CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj: \
  C:/msys64/mingw64/include/vadefs.h \
  C:/msys64/mingw64/include/sdks/_mingw_ddk.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stddef.h \
- C:/msys64/mingw64/include/stddef.h \
- C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/include/serial_link.h \
- C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/driver/uart.h \
- C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/FreeRTOS.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdbool.h
+ C:/msys64/mingw64/include/stddef.h

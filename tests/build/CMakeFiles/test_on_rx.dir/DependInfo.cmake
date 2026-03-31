@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c" "CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj" "gcc" "CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj.d"
   "C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_stubs.c" "CMakeFiles/test_on_rx.dir/stubs/esp_stubs.c.obj" "gcc" "CMakeFiles/test_on_rx.dir/stubs/esp_stubs.c.obj.d"
+  "C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos_stubs.c" "CMakeFiles/test_on_rx.dir/stubs/freertos_stubs.c.obj" "gcc" "CMakeFiles/test_on_rx.dir/stubs/freertos_stubs.c.obj.d"
   "C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/oled_stub.c" "CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.obj" "gcc" "CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.obj.d"
   "C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/profiler_stub.c" "CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj" "gcc" "CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj.d"
   "C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/serial_link_stub.c" "CMakeFiles/test_on_rx.dir/stubs/serial_link_stub.c.obj" "gcc" "CMakeFiles/test_on_rx.dir/stubs/serial_link_stub.c.obj.d"

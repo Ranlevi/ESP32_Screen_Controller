@@ -1,7 +1,8 @@
 #pragma once
 
 #include "esp_err.h"
-#include "serial_link.h"
+
+typedef struct serial_link_stats_s serial_link_stats_t;
 
 typedef esp_err_t (*profiler_write_fn_t)(const uint8_t *data, size_t len);
 typedef void      (*profiler_oled_fn_t)(const char *label, const char *value);
@@ -25,6 +26,8 @@ typedef struct {
     .task_stack_size = 3072,                         \
     .task_priority   = 1,                            \
 }
+
+#define PROFILER_OLED_KEY_MAX_LEN  15
 
 esp_err_t profiler_init(const profiler_cfg_t *cfg);
 void      profiler_set_oled_stat(const char *key);

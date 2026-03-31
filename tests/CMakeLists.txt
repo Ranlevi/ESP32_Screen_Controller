@@ -9,6 +9,7 @@ set(CMAKE_C_STANDARD 11)
 add_executable(test_on_rx
     unity/unity.c
     stubs/esp_stubs.c
+    stubs/freertos_stubs.c
     stubs/oled_stub.c
     stubs/serial_link_stub.c
     stubs/profiler_stub.c

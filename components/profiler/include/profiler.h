@@ -4,7 +4,11 @@
 #include <stdint.h>
 
 #include "esp_err.h"
-#include "serial_link.h"
+
+//  Forward declaration — profiler.h only holds a pointer to this struct,
+//  so it does not need the full definition. Callers that need to read the
+//  struct fields (e.g. main.c) must include serial_link.h themselves.
+typedef struct serial_link_stats_s serial_link_stats_t;
 
 //  Pointer to a function.
 //  The benefit: no need to include serial_link.h in the caller - any function
@@ -41,6 +45,10 @@ typedef struct {
 //  Validates cfg, spawns the profiler task, and returns.
 //  Idempotent: a second call with any cfg returns ESP_OK immediately.
 esp_err_t profiler_init(const profiler_cfg_t *cfg);
+
+//  Maximum length of a stat key string (e.g. "min_free_heap_b" = 15 chars).
+//  Used by callers to size buffers that must hold an OLED: command.
+#define PROFILER_OLED_KEY_MAX_LEN  15
 
 //  Selects which stat key to display on the OLED each interval.
 //  Pass an empty string or NULL to disable OLED updates.

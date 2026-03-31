@@ -338,6 +338,7 @@ stubs/freertos_stubs.obj: stubs/freertos_stubs.c.obj
 
 # target to build an object file
 stubs/freertos_stubs.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/freertos_stubs.c.obj
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/freertos_stubs.c.obj
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_profiler.dir\build.make CMakeFiles/test_profiler.dir/stubs/freertos_stubs.c.obj
 .PHONY : stubs/freertos_stubs.c.obj
@@ -347,6 +348,7 @@ stubs/freertos_stubs.i: stubs/freertos_stubs.c.i
 
 # target to preprocess a source file
 stubs/freertos_stubs.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/freertos_stubs.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/freertos_stubs.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_profiler.dir\build.make CMakeFiles/test_profiler.dir/stubs/freertos_stubs.c.i
 .PHONY : stubs/freertos_stubs.c.i
@@ -356,6 +358,7 @@ stubs/freertos_stubs.s: stubs/freertos_stubs.c.s
 
 # target to generate assembly for a file
 stubs/freertos_stubs.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_on_rx.dir\build.make CMakeFiles/test_on_rx.dir/stubs/freertos_stubs.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_serial_link.dir\build.make CMakeFiles/test_serial_link.dir/stubs/freertos_stubs.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_profiler.dir\build.make CMakeFiles/test_profiler.dir/stubs/freertos_stubs.c.s
 .PHONY : stubs/freertos_stubs.c.s

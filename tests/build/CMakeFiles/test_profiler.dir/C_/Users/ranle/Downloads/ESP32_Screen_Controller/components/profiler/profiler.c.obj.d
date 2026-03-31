@@ -12,9 +12,6 @@ CMakeFiles/test_profiler.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/co
  C:/msys64/mingw64/include/sdks/_mingw_ddk.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stddef.h \
  C:/msys64/mingw64/include/stddef.h \
- C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/include/serial_link.h \
- C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/driver/uart.h \
- C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/FreeRTOS.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdbool.h \
  C:/msys64/mingw64/include/stdio.h \
  C:/msys64/mingw64/include/corecrt_stdio_config.h \
@@ -27,5 +24,9 @@ CMakeFiles/test_profiler.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/co
  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_log.h \
  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_system.h \
  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_timer.h \
+ C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/FreeRTOS.h \
+ C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/semphr.h \
  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/task.h \
- C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/sdkconfig.h
+ C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/sdkconfig.h \
+ C:/Users/ranle/Downloads/ESP32_Screen_Controller/components/serial_link/include/serial_link.h \
+ C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/driver/uart.h

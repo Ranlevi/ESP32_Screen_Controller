@@ -9,14 +9,17 @@
 #include "esp_system.h"
 #include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "sdkconfig.h"
+#include "serial_link.h"
 
 static const char *TAG = "profiler";
 
-static profiler_cfg_t s_cfg;
-static bool           s_initialized = false;
-static char           s_oled_key[32] = "";
+static profiler_cfg_t    s_cfg;
+static bool              s_initialized = false;
+static char              s_oled_key[32] = "";
+static SemaphoreHandle_t s_oled_key_lock;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -131,49 +134,57 @@ static void profiler_task(void *arg)
         send(sys_buf, n);
 
         // --- OLED stat display ---
-        if (s_cfg.oled_fn && s_oled_key[0] != '\0') {
+        //  Copy the key under the lock so the RX task can't overwrite it
+        //  mid-read. The lock is released before the strcmp chain and the
+        //  oled_fn call, which keeps the critical section short.
+        char oled_key_snapshot[sizeof(s_oled_key)];
+        xSemaphoreTake(s_oled_key_lock, portMAX_DELAY);
+        memcpy(oled_key_snapshot, s_oled_key, sizeof(s_oled_key));
+        xSemaphoreGive(s_oled_key_lock);
+
+        if (s_cfg.oled_fn && oled_key_snapshot[0] != '\0') {
             char oled_label[17];
             char oled_value[17];
 
-            if (strcmp(s_oled_key, "uptime_s") == 0) {
+            if (strcmp(oled_key_snapshot, "uptime_s") == 0) {
                 uint32_t h = uptime_s / 3600;
                 uint32_t m = (uptime_s % 3600) / 60;
                 uint32_t s = uptime_s % 60;
                 snprintf(oled_label, sizeof(oled_label), "Uptime");
                 snprintf(oled_value, sizeof(oled_value), "%02lu:%02lu:%02lu",
                          (unsigned long)h, (unsigned long)m, (unsigned long)s);
-            } else if (strcmp(s_oled_key, "free_heap_b") == 0) {
+            } else if (strcmp(oled_key_snapshot, "free_heap_b") == 0) {
                 snprintf(oled_label, sizeof(oled_label), "Free Heap");
                 snprintf(oled_value, sizeof(oled_value), "%lu.%lu KB",
                          (unsigned long)(free_heap / 1024),
                          (unsigned long)((free_heap % 1024) * 10 / 1024));
-            } else if (strcmp(s_oled_key, "min_free_heap_b") == 0) {
+            } else if (strcmp(oled_key_snapshot, "min_free_heap_b") == 0) {
                 snprintf(oled_label, sizeof(oled_label), "Min Heap");
                 snprintf(oled_value, sizeof(oled_value), "%lu.%lu KB",
                          (unsigned long)(min_free_heap / 1024),
                          (unsigned long)((min_free_heap % 1024) * 10 / 1024));
-            } else if (strcmp(s_oled_key, "task_count") == 0) {
+            } else if (strcmp(oled_key_snapshot, "task_count") == 0) {
                 snprintf(oled_label, sizeof(oled_label), "Tasks");
                 snprintf(oled_value, sizeof(oled_value), "%lu", (unsigned long)task_count);
-            } else if (strcmp(s_oled_key, "reset_reason") == 0) {
+            } else if (strcmp(oled_key_snapshot, "reset_reason") == 0) {
                 snprintf(oled_label, sizeof(oled_label), "Reset Reason");
                 snprintf(oled_value, sizeof(oled_value), "%s", reset_reason_str(reset_reason));
-            } else if (strcmp(s_oled_key, "cpu_freq_mhz") == 0) {
+            } else if (strcmp(oled_key_snapshot, "cpu_freq_mhz") == 0) {
                 snprintf(oled_label, sizeof(oled_label), "CPU Freq");
                 snprintf(oled_value, sizeof(oled_value), "%d MHz", CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ);
-            } else if (strcmp(s_oled_key, "idf_version") == 0) {
+            } else if (strcmp(oled_key_snapshot, "idf_version") == 0) {
                 snprintf(oled_label, sizeof(oled_label), "IDF Version");
                 snprintf(oled_value, sizeof(oled_value), "%s", IDF_VER);
-            } else if (strcmp(s_oled_key, "fw_version") == 0) {
+            } else if (strcmp(oled_key_snapshot, "fw_version") == 0) {
                 snprintf(oled_label, sizeof(oled_label), "FW Version");
                 snprintf(oled_value, sizeof(oled_value), "%s",
                          s_cfg.fw_version ? s_cfg.fw_version : "");
-            } else if (strcmp(s_oled_key, "bytes_rx") == 0) {
+            } else if (strcmp(oled_key_snapshot, "bytes_rx") == 0) {
                 snprintf(oled_label, sizeof(oled_label), "Serial RX");
                 snprintf(oled_value, sizeof(oled_value), "%lu.%lu KB",
                          (unsigned long)(bytes_rx / 1024),
                          (unsigned long)((bytes_rx % 1024) * 10 / 1024));
-            } else if (strcmp(s_oled_key, "bytes_tx") == 0) {
+            } else if (strcmp(oled_key_snapshot, "bytes_tx") == 0) {
                 snprintf(oled_label, sizeof(oled_label), "Serial TX");
                 snprintf(oled_value, sizeof(oled_value), "%lu.%lu KB",
                          (unsigned long)(bytes_tx / 1024),
@@ -219,6 +230,11 @@ esp_err_t profiler_init(const profiler_cfg_t *cfg)
         return ESP_OK;
     }
 
+    s_oled_key_lock = xSemaphoreCreateMutex();
+    if (s_oled_key_lock == NULL) {
+        return ESP_ERR_NO_MEM;
+    }
+
     s_cfg = *cfg;
 
     BaseType_t ok = xTaskCreate(
@@ -241,10 +257,12 @@ esp_err_t profiler_init(const profiler_cfg_t *cfg)
 
 void profiler_set_oled_stat(const char *key)
 {
+    xSemaphoreTake(s_oled_key_lock, portMAX_DELAY);
     if (key == NULL) {
         s_oled_key[0] = '\0';
-        return;
+    } else {
+        strncpy(s_oled_key, key, sizeof(s_oled_key) - 1);
+        s_oled_key[sizeof(s_oled_key) - 1] = '\0';
     }
-    strncpy(s_oled_key, key, sizeof(s_oled_key) - 1);
-    s_oled_key[sizeof(s_oled_key) - 1] = '\0';
+    xSemaphoreGive(s_oled_key_lock);
 }

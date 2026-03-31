@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/test_on_rx.dir/C_/Users/ranle/Downloads/ESP32_Screen_Controller/main/main.c.obj.d"
   "CMakeFiles/test_on_rx.dir/stubs/esp_stubs.c.obj"
   "CMakeFiles/test_on_rx.dir/stubs/esp_stubs.c.obj.d"
+  "CMakeFiles/test_on_rx.dir/stubs/freertos_stubs.c.obj"
+  "CMakeFiles/test_on_rx.dir/stubs/freertos_stubs.c.obj.d"
   "CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.obj"
   "CMakeFiles/test_on_rx.dir/stubs/oled_stub.c.obj.d"
   "CMakeFiles/test_on_rx.dir/stubs/profiler_stub.c.obj"
