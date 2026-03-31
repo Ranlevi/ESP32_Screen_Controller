@@ -3,686 +3,1093 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ESP32 Dashboard</title>
+  <title>ESP32 Control Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg:      #080e1e;
-      --panel:   #0f1728;
-      --panel-2: #0c1321;
-      --surface: #141f38;
-      --text:    #e7ecff;
-      --muted:   #7a8fb8;
-      --dim:     #3a4d7a;
-      --accent:  #38c8ff;
-      --green:   #4debb8;
-      --purple:  #b48eff;
-      --amber:   #ffd166;
-      --danger:  #ff6b7a;
-      --border:  #1e2d58;
+      --bg: #0e1421;
+      --bg-elevated: #131c2d;
+      --surface: #1b2840;
+      --surface-soft: #213252;
+      --line: #35588f;
+      --line-soft: #4a76bb;
+      --text: #eaf1ff;
+      --muted: #9eb3d8;
+      --accent: #42d3c2;
+      --accent-soft: #2f8f99;
+      --warn: #f6b44e;
+      --danger: #ff6f7c;
+      --good: #8be38a;
+      --sky: #7bc5ff;
+      --shadow: 0 30px 80px rgba(3, 9, 20, 0.55);
+      --radius: 16px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      background: var(--bg);
-      background-image: radial-gradient(ellipse at 70% 0%, #0d1d50 0%, transparent 55%);
-      color: var(--text);
+      position: relative;
       min-height: 100vh;
-      padding: 24px 16px;
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(980px 620px at 110% -10%, #2f5b85 0%, transparent 58%),
+        radial-gradient(820px 520px at -18% 120%, #1e466a 0%, transparent 60%),
+        linear-gradient(140deg, rgba(97, 151, 216, 0.08), rgba(48, 101, 160, 0)),
+        var(--bg);
+      padding: 28px 18px;
     }
 
-    .app {
-      max-width: 1040px;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: radial-gradient(circle at 50% 40%, black, transparent 90%);
+      opacity: 0.3;
+    }
+
+    .layout {
+      max-width: 1280px;
       margin: 0 auto;
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      border: 1px solid rgba(113, 148, 206, 0.5);
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.55), 0 0 0 1px rgba(56,200,255,0.05);
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
+        rgba(15, 25, 43, 0.92);
+      backdrop-filter: blur(8px);
     }
 
-    /* ── Header ── */
-    .header {
-      padding: 13px 20px;
-      border-bottom: 1px solid var(--border);
+    .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: linear-gradient(90deg, #0e1830 0%, var(--panel) 100%);
+      gap: 14px;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(113, 148, 206, 0.35);
+      background: linear-gradient(90deg, #132544, #1c3561);
     }
 
-    .title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-
-    .conn-badge {
+    .brand {
       display: flex;
       align-items: center;
-      gap: 7px;
-      font-size: 0.8rem;
+      gap: 12px;
+    }
+
+    .brand-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--line-soft);
+      box-shadow: 0 0 0 4px rgba(66, 211, 194, 0.08);
+      transition: background-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .brand-dot.connected {
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(66, 211, 194, 0.18), 0 0 16px rgba(66, 211, 194, 0.42);
+    }
+
+    .title-block h1 {
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .title-block p {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .status {
+      font-size: 0.88rem;
       color: var(--muted);
     }
 
-    .conn-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--dim);
-      transition: background 0.4s, box-shadow 0.4s;
-    }
-    .conn-dot.on {
-      background: var(--green);
-      box-shadow: 0 0 7px var(--green);
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 0;
+      min-height: 700px;
     }
 
-    /* ── Toolbar ── */
+    .left-panel,
+    .right-panel {
+      padding: 22px;
+      background: linear-gradient(180deg, rgba(19, 28, 45, 0.98), rgba(14, 21, 35, 0.95));
+    }
+
+    .left-panel {
+      border-right: 1px solid var(--line);
+    }
+
+    .stack {
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      border: 1px solid rgba(113, 148, 206, 0.45);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.015));
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 13px 18px;
+      border-bottom: 1px solid rgba(103, 135, 186, 0.35);
+      background: rgba(12, 20, 35, 0.35);
+    }
+
+    .card-title {
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
     .toolbar {
       display: flex;
-      gap: 10px;
       align-items: center;
-      padding: 10px 20px;
-      border-bottom: 1px solid var(--border);
-      background: var(--panel-2);
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    button {
-      border-radius: 8px;
-      padding: 6px 14px;
-      font-size: 0.83rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: 1px solid;
-      transition: filter 0.15s, opacity 0.15s;
+    .mono {
+      font-family: "JetBrains Mono", Consolas, monospace;
     }
-    button:hover:not(:disabled) { filter: brightness(1.14); }
-    button:disabled { opacity: 0.36; cursor: not-allowed; }
 
-    .btn-connect    { border-color: #2a6e96; background: #0e2e44; color: var(--accent); }
-    .btn-disconnect { border-color: #7a2f3a; background: #3a1520; color: var(--danger); }
-    .btn-send       { border-color: #2a5e48; background: #102b20; color: var(--green); }
-    .btn-oled       { border-color: #5a3e9a; background: #201235; color: var(--purple); }
-
-    .toolbar-info { margin-left: auto; font-size: 0.78rem; color: var(--muted); }
     code {
-      background: #090f22;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1px 5px;
-      font-family: Consolas, monospace;
-      color: var(--text);
+      display: inline-block;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 3px 7px;
+      font-size: 0.8rem;
+      color: var(--sky);
+      background: #0d1729;
     }
 
-    /* ── Generic section wrapper ── */
-    .section {
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-      background: var(--panel);
-    }
-
-    .section-label {
-      font-size: 0.68rem;
+    button {
+      appearance: none;
+      border: 1px solid var(--btn-border, #6d8fc2);
+      border-radius: 13px;
+      padding: 10px 16px;
+      font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--dim);
-      margin-bottom: 12px;
+      font-family: inherit;
+      color: var(--btn-text, var(--text));
+      cursor: pointer;
+      min-height: 40px;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--btn-top, #4e72aa) 0%, var(--btn-bottom, #355787) 100%);
+      --btn-glow: rgba(109, 143, 194, 0.36);
+      --btn-focus: rgba(109, 143, 194, 0.34);
+      box-shadow:
+        0 10px 20px rgba(5, 11, 25, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      transition: transform 0.14s ease, filter 0.16s ease, opacity 0.16s ease, box-shadow 0.16s ease;
     }
 
-    /* ── Stat cards ── */
+    button::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.34), transparent 46%);
+      opacity: 0.2;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    button::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: inherit;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      filter: saturate(1.04) brightness(1.07);
+      box-shadow:
+        0 8px 16px rgba(4, 10, 21, 0.38),
+        0 0 0 1px var(--btn-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    }
+
+    button:focus-visible {
+      outline: none;
+      box-shadow:
+        0 10px 20px rgba(5, 11, 25, 0.34),
+        0 0 0 1px var(--btn-glow),
+        0 0 0 4px var(--btn-focus);
+    }
+
+    button:active:not(:disabled) {
+      transform: translateY(0) scale(0.99);
+      filter: saturate(1);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      filter: saturate(0.42) brightness(0.9);
+      cursor: not-allowed;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-connect {
+      --btn-border: #44d7be;
+      --btn-top: #1f6a60;
+      --btn-bottom: #144b45;
+      --btn-glow: rgba(68, 215, 190, 0.31);
+      --btn-focus: rgba(68, 215, 190, 0.28);
+      --btn-text: #c8fff3;
+    }
+
+    .btn-disconnect {
+      --btn-border: #df7b93;
+      --btn-top: #6a3043;
+      --btn-bottom: #4c2030;
+      --btn-glow: rgba(223, 123, 147, 0.3);
+      --btn-focus: rgba(223, 123, 147, 0.27);
+      --btn-text: #ffd3dd;
+    }
+
+    .btn-send {
+      --btn-border: #88ace5;
+      --btn-top: #5a83cb;
+      --btn-bottom: #3f629f;
+      --btn-glow: rgba(136, 172, 229, 0.28);
+      --btn-focus: rgba(136, 172, 229, 0.25);
+      --btn-text: #e7f0ff;
+    }
+
+    .btn-oled {
+      --btn-border: #ffab73;
+      --btn-top: #d06f39;
+      --btn-bottom: #9f4f27;
+      --btn-glow: rgba(255, 171, 115, 0.34);
+      --btn-focus: rgba(255, 171, 115, 0.28);
+      --btn-text: #fff2e7;
+    }
+
+    .toolbar button {
+      min-width: 140px;
+    }
+
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
+      border: 1px solid rgba(113, 148, 206, 0.5);
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(18, 32, 54, 0.86), rgba(15, 28, 48, 0.72));
+      padding: 14px 14px 16px;
       position: relative;
       overflow: hidden;
+      isolation: isolate;
+      min-height: 122px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
     }
 
-    /* coloured top stripe */
     .stat-card::before {
-      content: '';
+      content: "";
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--card-color, var(--border));
+      inset: 0 auto 0 0;
+      width: 4px;
+      height: 100%;
+      background: var(--card-color, var(--line-soft));
     }
 
-    .stat-label {
-      font-size: 0.69rem;
-      font-weight: 700;
+    .stat-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .stat-name {
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.07em;
       color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1.2;
     }
 
     .stat-value {
-      font-family: Consolas, "Courier New", monospace;
-      font-size: 1.38rem;
-      font-weight: 600;
+      font-size: 1.55rem;
+      line-height: 1.18;
+      font-weight: 700;
       color: var(--card-color, var(--text));
-      line-height: 1.15;
-      overflow: hidden;
+      font-family: "JetBrains Mono", Consolas, monospace;
       white-space: nowrap;
+      overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .stat-unit {
-      font-size: 0.68rem;
-      color: var(--dim);
-      min-height: 0.9em;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(113, 148, 206, 0.4);
+      background: rgba(53, 88, 143, 0.2);
+      color: var(--muted);
+      padding: 3px 8px;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
-    @keyframes flash {
-      from { opacity: 0.35; }
-      to   { opacity: 1; }
+    .stat-unit:empty {
+      display: none;
     }
-    .stat-value.pop { animation: flash 0.4s ease-out; }
 
-    /* ── OLED selector ── */
+    @keyframes pulse-in {
+      from { opacity: 0.45; transform: translateY(2px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stat-value.bump {
+      animation: pulse-in 0.34s ease-out;
+    }
+
     .oled-options {
       display: flex;
+      align-items: center;
+      gap: 10px;
       flex-wrap: wrap;
-      gap: 8px;
       margin-bottom: 12px;
     }
 
-    .oled-option input[type=radio] { display: none; }
+    .oled-option input {
+      display: none;
+    }
 
     .oled-option label {
-      cursor: pointer;
-      padding: 5px 13px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 0.78rem;
+      display: inline-block;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.82rem;
       color: var(--muted);
+      cursor: pointer;
       background: var(--surface);
+      transition: border-color 0.14s ease, color 0.14s ease, background-color 0.14s ease;
       user-select: none;
-      transition: border-color 0.15s, color 0.15s, box-shadow 0.15s, background 0.15s;
-    }
-    .oled-option label:hover { filter: brightness(1.18); }
-
-    .oled-option input[type=radio]:checked + label {
-      border-color: var(--purple);
-      color: var(--purple);
-      background: #180d30;
-      box-shadow: 0 0 8px rgba(180,142,255,0.22);
     }
 
-    /* ── Task runtime table ── */
-    .task-placeholder { color: var(--dim); font-size: 0.82rem; font-style: italic; }
+    .oled-option input:checked + label {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #183740;
+    }
+
+    .task-placeholder {
+      font-size: 0.86rem;
+      color: var(--muted);
+      font-style: italic;
+    }
 
     .task-table {
       width: 100%;
       border-collapse: collapse;
-      font-family: Consolas, monospace;
-      font-size: 0.81rem;
+      font-family: "JetBrains Mono", Consolas, monospace;
+      font-size: 0.82rem;
     }
-    .task-table th {
+
+    .task-table thead th {
       text-align: left;
-      color: var(--dim);
-      font-size: 0.68rem;
-      text-transform: uppercase;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.72rem;
       letter-spacing: 0.08em;
-      padding: 3px 10px 7px;
-      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+      padding: 6px 8px 8px;
     }
-    .task-table td { padding: 4px 10px; color: var(--text); }
-    .task-table tr:nth-child(even) td { background: rgba(255,255,255,0.018); }
+
+    .task-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .task-table tbody tr:nth-child(2n) td {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .pct-cell {
+      white-space: nowrap;
+    }
 
     .pct-bar {
       display: inline-block;
       height: 5px;
-      border-radius: 3px;
-      background: var(--accent);
-      opacity: 0.45;
       margin-left: 7px;
+      border-radius: 4px;
+      background: var(--accent-soft);
       vertical-align: middle;
+      opacity: 0.75;
     }
 
-    /* ── Terminal ── */
-    .section-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .toggle-btn {
-      background: none;
-      border: none;
+    .toggle {
+      border: 0;
+      background: transparent;
       color: var(--muted);
-      font-size: 0.76rem;
-      cursor: pointer;
-      padding: 2px 8px;
+      padding: 4px 0;
+      min-height: 0;
+      font-size: 0.8rem;
+      border-radius: 0;
+      text-transform: none;
+      letter-spacing: normal;
+      font-weight: 500;
+      box-shadow: none;
+      overflow: visible;
     }
-    .toggle-btn:hover { color: var(--text); }
 
-    .terminal-wrap.hidden { display: none; }
+    .toggle::before {
+      display: none;
+    }
+
+    .toggle:hover:not(:disabled) {
+      transform: none;
+      color: var(--text);
+    }
+
+    .terminal-wrap.hidden {
+      display: none;
+    }
 
     .terminal {
-      height: 200px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      height: 340px;
       overflow: auto;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 12px;
-      background: #040a17;
-      font-family: Consolas, "Courier New", monospace;
-      font-size: 0.8rem;
-      line-height: 1.5;
+      background:
+        repeating-linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.012) 0,
+          rgba(255, 255, 255, 0.012) 1px,
+          rgba(255, 255, 255, 0) 1px,
+          rgba(255, 255, 255, 0) 22px
+        ),
+        #0b1322;
+      padding: 12px 13px;
+      font-family: "JetBrains Mono", Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.52;
       white-space: pre-wrap;
       word-break: break-word;
     }
 
-    .tx        { color: var(--green); }
-    .rx        { color: var(--accent); }
-    .rx-json   { color: #2a3f68; }   /* dimmed — parsed JSON, dashboard handles it */
-    .sys       { color: var(--muted); }
-    .err       { color: var(--danger); }
+    .entry-tx {
+      color: var(--good);
+    }
 
-    /* ── Composer ── */
+    .entry-rx {
+      color: var(--sky);
+    }
+
+    .entry-rx-json {
+      color: #6e84ad;
+    }
+
+    .entry-sys {
+      color: var(--muted);
+    }
+
+    .entry-err {
+      color: var(--danger);
+    }
+
     .composer {
-      padding: 14px 20px;
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 10px;
-      background: var(--panel-2);
     }
 
     #txInput {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: #080f1e;
+      width: 100%;
+      min-height: 72px;
+      resize: none;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #0d1729;
       color: var(--text);
-      padding: 9px 12px;
-      min-height: 42px;
-      resize: vertical;
-      font-family: Consolas, monospace;
-      font-size: 0.83rem;
+      padding: 9px 10px;
+      font-family: "JetBrains Mono", Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.4;
     }
-    #txInput:focus { outline: none; border-color: #2a4a7a; }
 
-    .options {
+    #sendBtn {
+      align-self: start;
+      min-width: 112px;
+      min-height: 36px;
+      padding: 7px 14px;
+      border-radius: 11px;
+    }
+
+    #txInput:focus {
+      outline: none;
+      border-color: var(--line-soft);
+    }
+
+    .composer-options {
       grid-column: 1 / -1;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
       color: var(--muted);
-      font-size: 0.8rem;
+      font-size: 0.82rem;
     }
 
-    @media (max-width: 580px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .composer-options input[type="checkbox"] {
+      accent-color: var(--accent);
+    }
+
+    .composer {
+      align-items: center;
+    }
+
+    .btn-send {
+      --btn-border: #84b8ff;
+      --btn-top: #4f89e8;
+      --btn-bottom: #335ea8;
+      --btn-glow: rgba(132, 184, 255, 0.3);
+      --btn-focus: rgba(132, 184, 255, 0.26);
+      --btn-text: #f3f8ff;
+    }
+
+    #sendBtn {
+      align-self: center;
+      min-width: 106px;
+      min-height: 38px;
+      padding: 7px 15px;
+      border-radius: 11px;
+      letter-spacing: 0.06em;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 0.78rem;
+      padding: 0 2px;
+    }
+
+    @media (max-width: 980px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .left-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 12px 10px;
+      }
+
+      .layout {
+        border-radius: 14px;
+      }
+
+      .topbar {
+        padding: 14px 12px;
+      }
+
+      .left-panel,
+      .right-panel {
+        padding: 14px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar button,
+      #setOledBtn,
+      #sendBtn {
+        width: 100%;
+      }
+
+      .composer {
+        grid-template-columns: 1fr;
+      }
+
+      #sendBtn {
+        align-self: start;
+      }
     }
   </style>
 </head>
 <body>
-<main class="app">
+  <main class="layout">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-dot" id="connDot"></div>
+        <div class="title-block">
+          <h1>ESP32 Control Center</h1>
+          <p id="connLabel">Disconnected</p>
+        </div>
+      </div>
+      <div class="status">Baud <code class="mono">115200</code></div>
+    </header>
 
-  <!-- ── Header ── -->
-  <header class="header">
-    <div class="title">ESP32 Dashboard</div>
-    <div class="conn-badge">
-      <div class="conn-dot" id="connDot"></div>
-      <span id="connLabel">Disconnected</span>
-    </div>
-  </header>
+    <section class="main-grid">
+      <div class="left-panel">
+        <div class="stack">
+          <article class="card">
+            <div class="card-header">
+              <h2 class="card-title">Connection</h2>
+            </div>
+            <div class="card-body">
+              <div class="toolbar">
+                <button id="connectBtn" class="btn-connect">Connect</button>
+                <button id="disconnectBtn" class="btn-disconnect" disabled>Disconnect</button>
+              </div>
+            </div>
+          </article>
 
-  <!-- ── Toolbar ── -->
-  <div class="toolbar">
-    <button id="connectBtn"    class="btn-connect">Connect</button>
-    <button id="disconnectBtn" class="btn-disconnect" disabled>Disconnect</button>
-    <span class="toolbar-info">Baud: <code>115200</code></span>
-  </div>
+          <article class="card">
+            <div class="card-header">
+              <h2 class="card-title">System Stats</h2>
+            </div>
+            <div class="card-body">
+              <div class="stats-grid" id="statsGrid"></div>
+            </div>
+          </article>
 
-  <!-- ── Stats Grid ── -->
-  <section class="section">
-    <div class="section-label">System Stats</div>
-    <div class="stats-grid" id="statsGrid"></div>
-  </section>
+          <article class="card">
+            <div class="card-header">
+              <h2 class="card-title">OLED Display</h2>
+            </div>
+            <div class="card-body">
+              <div class="oled-options" id="oledOptions"></div>
+              <button id="setOledBtn" class="btn-oled" disabled>Set OLED Display</button>
+            </div>
+          </article>
 
-  <!-- ── OLED Selector ── -->
-  <section class="section">
-    <div class="section-label">OLED Display</div>
-    <div class="oled-options" id="oledOptions"></div>
-    <button class="btn-oled" id="setOledBtn" disabled>Set OLED Display</button>
-  </section>
+          <article class="card">
+            <div class="card-header">
+              <h2 class="card-title">Task Runtime</h2>
+            </div>
+            <div class="card-body">
+              <p class="task-placeholder" id="taskPlaceholder">Waiting for data...</p>
+              <table class="task-table" id="taskTable" style="display: none;">
+                <thead>
+                  <tr>
+                    <th>Task</th>
+                    <th>Abs Runtime</th>
+                    <th>CPU %</th>
+                  </tr>
+                </thead>
+                <tbody id="taskBody"></tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </div>
 
-  <!-- ── Task Runtime ── -->
-  <section class="section">
-    <div class="section-label">Task Runtime</div>
-    <p class="task-placeholder" id="taskPlaceholder">Waiting for data…</p>
-    <table class="task-table" id="taskTable" style="display:none">
-      <thead><tr>
-        <th>Task</th>
-        <th>Abs Runtime</th>
-        <th>CPU %</th>
-      </tr></thead>
-      <tbody id="taskBody"></tbody>
-    </table>
-  </section>
+      <aside class="right-panel">
+        <div class="stack">
+          <article class="card">
+            <div class="card-header">
+              <h2 class="card-title">Terminal</h2>
+              <button id="termToggle" class="toggle">Hide</button>
+            </div>
+            <div class="card-body terminal-wrap" id="terminalWrap">
+              <div id="terminal" class="terminal" aria-live="polite"></div>
+            </div>
+          </article>
 
-  <!-- ── Terminal ── -->
-  <section class="section">
-    <div class="section-row">
-      <div class="section-label" style="margin:0">Terminal</div>
-      <button class="toggle-btn" id="termToggle">▼ Hide</button>
-    </div>
-    <div class="terminal-wrap" id="terminalWrap">
-      <div class="terminal" id="terminal" aria-live="polite"></div>
-    </div>
-  </section>
+          <article class="card">
+            <div class="card-header">
+              <h2 class="card-title">Command</h2>
+            </div>
+            <div class="card-body">
+              <div class="composer">
+                <textarea id="txInput" placeholder="Type command to send..."></textarea>
+                <button id="sendBtn" class="btn-send" disabled>Send</button>
+                <label class="composer-options">
+                  <input type="checkbox" id="appendNewline" checked />
+                  Append \r\n
+                </label>
+              </div>
+            </div>
+          </article>
 
-  <!-- ── Composer ── -->
-  <div class="composer">
-    <textarea id="txInput" placeholder="Type to send…"></textarea>
-    <button id="sendBtn" class="btn-send" disabled>Send</button>
-    <label class="options">
-      <input type="checkbox" id="appendNewline" checked />
-      Append \r\n
-    </label>
-  </div>
+          <p class="footer-note">Tip: press Enter to send. Use Shift+Enter for a new line.</p>
+        </div>
+      </aside>
+    </section>
+  </main>
 
-</main>
-<script>
-'use strict';
+  <script>
+    "use strict";
 
-// ─── Stat definitions ─────────────────────────────────────────────────────────
+    const RESET_REASONS = {
+      0: "Unknown",
+      1: "Power On",
+      2: "Ext Pin",
+      3: "Software",
+      4: "Panic",
+      5: "Int WDT",
+      6: "Task WDT",
+      7: "WDT",
+      8: "Deep Sleep",
+      9: "Brownout",
+      10: "SDIO"
+    };
 
-const RESET_REASONS = {
-  0:'Unknown', 1:'Power On', 2:'Ext Pin', 3:'Software',
-  4:'Panic',   5:'Int WDT',  6:'Task WDT', 7:'WDT',
-  8:'Deep Sleep', 9:'Brownout', 10:'SDIO',
-};
+    function formatUptime(seconds) {
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = seconds % 60;
+      return [h, m, s].map((v) => String(v).padStart(2, "0")).join(":");
+    }
 
-function fmtUptime(s) {
-  const h = Math.floor(s / 3600);
-  const m = Math.floor((s % 3600) / 60);
-  const sec = s % 60;
-  return [h, m, sec].map(v => String(v).padStart(2, '0')).join(':');
-}
-function fmtKB(b)    { return (b / 1024).toFixed(1); }
-function fmtBytes(b) {
-  if (b >= 1048576) return (b / 1048576).toFixed(2) + ' MB';
-  if (b >= 1024)    return (b / 1024).toFixed(1) + ' KB';
-  return b + ' B';
-}
+    function formatKB(bytes) {
+      return (bytes / 1024).toFixed(1);
+    }
 
-// key, display label, top-stripe colour, value formatter, unit label
-const STAT_DEFS = [
-  { key:'uptime_s',        label:'Uptime',       color:'#38c8ff', fmt: v => fmtUptime(v),                      unit:'hh : mm : ss' },
-  { key:'free_heap_b',     label:'Free Heap',    color:'#4debb8', fmt: v => fmtKB(v),                          unit:'KB' },
-  { key:'min_free_heap_b', label:'Min Free Heap',color:'#4debb8', fmt: v => fmtKB(v),                          unit:'KB' },
-  { key:'task_count',      label:'Tasks',        color:'#b48eff', fmt: v => v,                                  unit:'' },
-  { key:'cpu_freq_mhz',    label:'CPU Freq',     color:'#b48eff', fmt: v => v,                                  unit:'MHz' },
-  { key:'idf_version',     label:'IDF Version',  color:'#7a8fb8', fmt: v => v,                                  unit:'' },
-  { key:'fw_version',      label:'FW Version',   color:'#7a8fb8', fmt: v => v,                                  unit:'' },
-  { key:'bytes_rx',        label:'Serial RX',    color:'#38c8ff', fmt: v => fmtBytes(v),                       unit:'' },
-  { key:'bytes_tx',        label:'Serial TX',    color:'#38c8ff', fmt: v => fmtBytes(v),                       unit:'' },
-  { key:'reset_reason',    label:'Reset Reason', color:'#ffd166', fmt: v => RESET_REASONS[v] ?? ('Code '+v),   unit:'' },
-];
+    function formatBytes(bytes) {
+      if (bytes >= 1048576) return (bytes / 1048576).toFixed(2) + " MB";
+      if (bytes >= 1024) return (bytes / 1024).toFixed(1) + " KB";
+      return String(bytes) + " B";
+    }
 
-// ─── Build stats grid ─────────────────────────────────────────────────────────
+    const STAT_DEFS = [
+      { key: "uptime_s", label: "Uptime", color: "#7bc5ff", format: (v) => formatUptime(v), unit: "hh:mm:ss" },
+      { key: "free_heap_b", label: "Free Heap", color: "#8be38a", format: (v) => formatKB(v), unit: "KB" },
+      { key: "min_free_heap_b", label: "Min Free Heap", color: "#8be38a", format: (v) => formatKB(v), unit: "KB" },
+      { key: "task_count", label: "Tasks", color: "#f6b44e", format: (v) => v, unit: "" },
+      { key: "cpu_freq_mhz", label: "CPU Freq", color: "#f6b44e", format: (v) => v, unit: "MHz" },
+      { key: "idf_version", label: "IDF Version", color: "#c2d1f0", format: (v) => v, unit: "" },
+      { key: "fw_version", label: "FW Version", color: "#c2d1f0", format: (v) => v, unit: "" },
+      { key: "bytes_rx", label: "Serial RX", color: "#42d3c2", format: (v) => formatBytes(v), unit: "" },
+      { key: "bytes_tx", label: "Serial TX", color: "#42d3c2", format: (v) => formatBytes(v), unit: "" },
+      { key: "reset_reason", label: "Reset Reason", color: "#f6b44e", format: (v) => RESET_REASONS[v] || ("Code " + v), unit: "" }
+    ];
 
-const statsGrid = document.getElementById('statsGrid');
-for (const d of STAT_DEFS) {
-  const card = document.createElement('div');
-  card.className = 'stat-card';
-  card.style.setProperty('--card-color', d.color);
-  card.innerHTML =
-    `<div class="stat-label">${d.label}</div>` +
-    `<div class="stat-value" id="sv-${d.key}">—</div>` +
-    `<div class="stat-unit">${d.unit}</div>`;
-  statsGrid.appendChild(card);
-}
+    const statsGrid = document.getElementById("statsGrid");
+    for (const def of STAT_DEFS) {
+      const card = document.createElement("div");
+      card.className = "stat-card";
+      card.style.setProperty("--card-color", def.color);
+      card.innerHTML =
+        '<div class="stat-head">' +
+          '<div class="stat-name">' + def.label + "</div>" +
+          '<div class="stat-unit">' + def.unit + "</div>" +
+        "</div>" +
+        '<div class="stat-value" id="sv-' + def.key + '">--</div>';
+      statsGrid.appendChild(card);
+    }
 
-// ─── Build OLED options ───────────────────────────────────────────────────────
+    const oledOptions = document.getElementById("oledOptions");
+    for (const def of STAT_DEFS) {
+      const wrapper = document.createElement("span");
+      wrapper.className = "oled-option";
+      wrapper.innerHTML =
+        '<input type="radio" name="oled" id="oled-' + def.key + '" value="' + def.key + '">' +
+        '<label for="oled-' + def.key + '">' + def.label + "</label>";
+      oledOptions.appendChild(wrapper);
+    }
 
-const oledOptions = document.getElementById('oledOptions');
-for (const d of STAT_DEFS) {
-  const wrap = document.createElement('span');
-  wrap.className = 'oled-option';
-  wrap.innerHTML =
-    `<input type="radio" name="oled" id="oled-${d.key}" value="${d.key}">` +
-    `<label for="oled-${d.key}">${d.label}</label>`;
-  oledOptions.appendChild(wrap);
-}
+    const terminalEl = document.getElementById("terminal");
+    const terminalWrap = document.getElementById("terminalWrap");
+    const termToggleBtn = document.getElementById("termToggle");
+    const connectBtn = document.getElementById("connectBtn");
+    const disconnectBtn = document.getElementById("disconnectBtn");
+    const sendBtn = document.getElementById("sendBtn");
+    const setOledBtn = document.getElementById("setOledBtn");
+    const txInput = document.getElementById("txInput");
+    const appendNewlineEl = document.getElementById("appendNewline");
+    const connDot = document.getElementById("connDot");
+    const connLabel = document.getElementById("connLabel");
+    const taskPlaceholder = document.getElementById("taskPlaceholder");
+    const taskTable = document.getElementById("taskTable");
+    const taskBody = document.getElementById("taskBody");
 
-// ─── DOM refs ─────────────────────────────────────────────────────────────────
+    let port = null;
+    let reader = null;
+    let writer = null;
+    let keepReading = false;
+    let rxBuffer = "";
 
-const termEl         = document.getElementById('terminal');
-const termWrap       = document.getElementById('terminalWrap');
-const termToggleBtn  = document.getElementById('termToggle');
-const connDot        = document.getElementById('connDot');
-const connLabel      = document.getElementById('connLabel');
-const connectBtn     = document.getElementById('connectBtn');
-const disconnectBtn  = document.getElementById('disconnectBtn');
-const sendBtn        = document.getElementById('sendBtn');
-const setOledBtn     = document.getElementById('setOledBtn');
-const txInput        = document.getElementById('txInput');
-const appendNlEl     = document.getElementById('appendNewline');
-const taskPlaceholder = document.getElementById('taskPlaceholder');
-const taskTable      = document.getElementById('taskTable');
-const taskBody       = document.getElementById('taskBody');
+    function logLine(kind, text) {
+      const line = document.createElement("div");
+      line.className = "entry-" + kind;
+      line.textContent = text;
+      terminalEl.appendChild(line);
+      while (terminalEl.childElementCount > 700) {
+        terminalEl.removeChild(terminalEl.firstChild);
+      }
+      terminalEl.scrollTop = terminalEl.scrollHeight;
+    }
 
-// ─── Serial state ─────────────────────────────────────────────────────────────
+    function setConnectedUI(connected) {
+      connectBtn.disabled = connected;
+      disconnectBtn.disabled = !connected;
+      sendBtn.disabled = !connected;
+      setOledBtn.disabled = !connected;
+      connDot.classList.toggle("connected", connected);
+      connLabel.textContent = connected ? "Connected" : "Disconnected";
+    }
 
-let port        = null;
-let reader      = null;
-let writer      = null;
-let keepReading = false;
-let rxBuf       = '';
+    function flashStat(key) {
+      const node = document.getElementById("sv-" + key);
+      if (!node) return;
+      node.classList.remove("bump");
+      void node.offsetWidth;
+      node.classList.add("bump");
+    }
 
-// ─── UI helpers ───────────────────────────────────────────────────────────────
+    function setStat(key, rawValue) {
+      const def = STAT_DEFS.find((item) => item.key === key);
+      if (!def) return;
+      const node = document.getElementById("sv-" + key);
+      if (!node) return;
+      const value = String(def.format(rawValue));
+      if (node.textContent !== value) {
+        node.textContent = value;
+        flashStat(key);
+      }
+    }
 
-function log(cls, text) {
-  const el = document.createElement('div');
-  el.className = cls;
-  el.textContent = text;
-  termEl.appendChild(el);
-  while (termEl.childElementCount > 600) termEl.removeChild(termEl.firstChild);
-  termEl.scrollTop = termEl.scrollHeight;
-}
+    function renderTaskRuntime(textBlock) {
+      const rows = String(textBlock)
+        .split("\n")
+        .map((line) => line.split("\t").filter((segment) => segment.trim() !== ""))
+        .filter((columns) => columns.length >= 2);
 
-function setConnected(on) {
-  connectBtn.disabled    = on;
-  disconnectBtn.disabled = !on;
-  sendBtn.disabled       = !on;
-  setOledBtn.disabled    = !on;
-  connDot.classList.toggle('on', on);
-  connLabel.textContent  = on ? 'Connected' : 'Disconnected';
-}
+      if (!rows.length) return;
 
-function flashStat(key) {
-  const el = document.getElementById('sv-' + key);
-  if (!el) return;
-  el.classList.remove('pop');
-  void el.offsetWidth;           // force reflow to restart animation
-  el.classList.add('pop');
-}
+      taskBody.innerHTML = "";
+      for (const row of rows) {
+        const name = row[0] || "";
+        const absRuntime = row[1] || "";
+        const pctText = row[2] || "";
+        const pctNumeric = parseInt(String(pctText).replace(/\D/g, ""), 10) || 0;
 
-function setStat(key, rawVal) {
-  const def = STAT_DEFS.find(d => d.key === key);
-  if (!def) return;
-  const el  = document.getElementById('sv-' + key);
-  if (!el)  return;
-  const str = String(def.fmt(rawVal));
-  if (el.textContent !== str) { el.textContent = str; flashStat(key); }
-}
+        const tr = document.createElement("tr");
+        const tdName = document.createElement("td");
+        const tdAbs = document.createElement("td");
+        const tdPct = document.createElement("td");
+        tdPct.className = "pct-cell";
 
-// ─── Incoming JSON handling ───────────────────────────────────────────────────
+        tdName.textContent = name;
+        tdAbs.textContent = absRuntime;
+        tdPct.textContent = pctText;
 
-function handleParsed(obj) {
-  // system stats frame
-  for (const d of STAT_DEFS) {
-    if (d.key in obj) setStat(d.key, obj[d.key]);
-  }
+        const bar = document.createElement("span");
+        bar.className = "pct-bar";
+        bar.style.width = String(Math.min(pctNumeric, 100) * 0.6) + "px";
+        tdPct.appendChild(bar);
 
-  // task runtime frame
-  if ('task_runtime' in obj) {
-    // obj.task_runtime is already a JS string with real \n and \t chars
-    const rows = obj.task_runtime
-      .split('\n')
-      .map(line => line.split('\t').filter(s => s.trim() !== ''))
-      .filter(cols => cols.length >= 2);
-
-    if (rows.length > 0) {
-      taskBody.innerHTML = '';
-      for (const [name, abs, pct] of rows) {
-        const num = pct ? (parseInt(pct.replace(/\D/g, ''), 10) || 0) : 0;
-        const tr = document.createElement('tr');
-        tr.innerHTML =
-          `<td>${name ?? ''}</td>` +
-          `<td>${abs ?? ''}</td>` +
-          `<td>${pct ?? ''}` +
-            `<span class="pct-bar" style="width:${Math.min(num, 100) * 0.55}px"></span>` +
-          `</td>`;
+        tr.appendChild(tdName);
+        tr.appendChild(tdAbs);
+        tr.appendChild(tdPct);
         taskBody.appendChild(tr);
       }
-      taskPlaceholder.style.display = 'none';
-      taskTable.style.display       = 'table';
+
+      taskPlaceholder.style.display = "none";
+      taskTable.style.display = "table";
     }
-  }
-}
 
-function processLine(line) {
-  let parsed = false;
-  try {
-    const obj = JSON.parse(line);
-    if (obj && typeof obj === 'object') {
-      handleParsed(obj);
-      parsed = true;
-    }
-  } catch (_) {}
-  log(parsed ? 'rx-json' : 'rx', 'RX: ' + line);
-}
-
-// ─── Read loop ────────────────────────────────────────────────────────────────
-
-async function readLoop() {
-  const dec = new TextDecoder();
-  try {
-    while (keepReading && port?.readable) {
-      reader = port.readable.getReader();
-      try {
-        while (keepReading) {
-          const { value, done } = await reader.read();
-          if (done) break;
-          if (value?.length) {
-            rxBuf += dec.decode(value, { stream: true });
-            const lines = rxBuf.split(/\r?\n/);
-            rxBuf = lines.pop() ?? '';
-            for (const line of lines) processLine(line);
-          }
+    function handleJsonFrame(frame) {
+      for (const def of STAT_DEFS) {
+        if (Object.prototype.hasOwnProperty.call(frame, def.key)) {
+          setStat(def.key, frame[def.key]);
         }
-      } finally {
-        reader.releaseLock();
-        reader = null;
+      }
+
+      if (Object.prototype.hasOwnProperty.call(frame, "task_runtime")) {
+        renderTaskRuntime(frame.task_runtime);
       }
     }
-  } catch (e) {
-    log('err', 'Read error: ' + e.message);
-  }
-}
 
-// ─── Connect / Disconnect ─────────────────────────────────────────────────────
+    function processSerialLine(line) {
+      let parsed = false;
+      try {
+        const payload = JSON.parse(line);
+        if (payload && typeof payload === "object") {
+          handleJsonFrame(payload);
+          parsed = true;
+        }
+      } catch (_error) {
+      }
+      logLine(parsed ? "rx-json" : "rx", "RX: " + line);
+    }
 
-async function connect() {
-  if (!('serial' in navigator)) {
-    log('err', 'Web Serial API not supported. Use Chrome or Edge.');
-    return;
-  }
-  try {
-    port = await navigator.serial.requestPort();
-    await port.open({ baudRate: 115200 });
-    writer = port.writable.getWriter();
-    keepReading = true;
-    setConnected(true);
-    log('sys', 'Connected.');
-    readLoop();
-  } catch (e) {
-    log('err', 'Connect failed: ' + e.message);
-  }
-}
+    async function readLoop() {
+      const decoder = new TextDecoder();
+      try {
+        while (keepReading && port && port.readable) {
+          reader = port.readable.getReader();
+          try {
+            while (keepReading) {
+              const packet = await reader.read();
+              if (packet.done) break;
+              if (packet.value && packet.value.length) {
+                rxBuffer += decoder.decode(packet.value, { stream: true });
+                const lines = rxBuffer.split(/\r?\n/);
+                rxBuffer = lines.pop() || "";
+                for (const line of lines) {
+                  processSerialLine(line);
+                }
+              }
+            }
+          } finally {
+            reader.releaseLock();
+            reader = null;
+          }
+        }
+      } catch (error) {
+        logLine("err", "Read error: " + error.message);
+      }
+    }
 
-async function disconnect() {
-  keepReading = false;
-  try { if (reader) await reader.cancel(); } catch (_) {}
-  try { if (writer) { writer.releaseLock(); writer = null; } } catch (_) {}
-  try {
-    if (port) await port.close();
-  } catch (e) {
-    log('err', 'Disconnect warning: ' + e.message);
-  } finally {
-    if (rxBuf) { log('rx', 'RX: ' + rxBuf); rxBuf = ''; }
-    port = null;
-    setConnected(false);
-    log('sys', 'Disconnected.');
-  }
-}
+    async function connectSerial() {
+      if (!("serial" in navigator)) {
+        logLine("err", "Web Serial API is not supported. Use Chrome or Edge.");
+        return;
+      }
+      try {
+        port = await navigator.serial.requestPort();
+        await port.open({ baudRate: 115200 });
+        writer = port.writable.getWriter();
+        keepReading = true;
+        setConnectedUI(true);
+        logLine("sys", "Connected.");
+        readLoop();
+      } catch (error) {
+        logLine("err", "Connect failed: " + error.message);
+      }
+    }
 
-// ─── Send ────────────────────────────────────────────────────────────────────
+    async function disconnectSerial() {
+      keepReading = false;
+      try {
+        if (reader) await reader.cancel();
+      } catch (_error) {
+      }
+      try {
+        if (writer) {
+          writer.releaseLock();
+          writer = null;
+        }
+      } catch (_error) {
+      }
+      try {
+        if (port) await port.close();
+      } catch (error) {
+        logLine("err", "Disconnect warning: " + error.message);
+      } finally {
+        if (rxBuffer) {
+          logLine("rx", "RX: " + rxBuffer);
+          rxBuffer = "";
+        }
+        port = null;
+        setConnectedUI(false);
+        logLine("sys", "Disconnected.");
+      }
+    }
 
-async function send(text) {
-  if (!writer || !text) return;
-  const payload = appendNlEl.checked ? text + '\r\n' : text;
-  try {
-    await writer.write(new TextEncoder().encode(payload));
-    log('tx', 'TX: ' + text);
-  } catch (e) {
-    log('err', 'Send failed: ' + e.message);
-  }
-}
+    async function sendText(text) {
+      if (!writer || !text) return;
+      const data = appendNewlineEl.checked ? text + "\r\n" : text;
+      try {
+        await writer.write(new TextEncoder().encode(data));
+        logLine("tx", "TX: " + text);
+      } catch (error) {
+        logLine("err", "Send failed: " + error.message);
+      }
+    }
 
-// ─── Event wiring ─────────────────────────────────────────────────────────────
+    connectBtn.addEventListener("click", connectSerial);
+    disconnectBtn.addEventListener("click", disconnectSerial);
 
-connectBtn.addEventListener('click', connect);
-disconnectBtn.addEventListener('click', disconnect);
+    sendBtn.addEventListener("click", () => {
+      const text = txInput.value.trim();
+      if (!text) return;
+      sendText(text);
+      txInput.value = "";
+      txInput.focus();
+    });
 
-sendBtn.addEventListener('click', () => {
-  const t = txInput.value.trim();
-  if (!t) return;
-  send(t);
-  txInput.value = '';
-  txInput.focus();
-});
+    txInput.addEventListener("keydown", (event) => {
+      if (event.isComposing) return;
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendBtn.click();
+      }
+    });
 
-txInput.addEventListener('keydown', e => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); sendBtn.click(); }
-});
+    setOledBtn.addEventListener("click", () => {
+      const selected = document.querySelector('input[name="oled"]:checked');
+      if (!selected) {
+        logLine("sys", "Select a stat first.");
+        return;
+      }
+      sendText("OLED:" + selected.value);
+    });
 
-setOledBtn.addEventListener('click', () => {
-  const sel = document.querySelector('input[name=oled]:checked');
-  if (!sel) { log('sys', 'Select a stat first.'); return; }
-  send('OLED:' + sel.value);
-});
+    termToggleBtn.addEventListener("click", () => {
+      const hidden = terminalWrap.classList.toggle("hidden");
+      termToggleBtn.textContent = hidden ? "Show" : "Hide";
+    });
 
-termToggleBtn.addEventListener('click', () => {
-  const hidden = termWrap.classList.toggle('hidden');
-  termToggleBtn.textContent = hidden ? '▶ Show' : '▼ Hide';
-});
+    if (navigator.serial) {
+      navigator.serial.addEventListener("disconnect", async () => {
+        if (port) await disconnectSerial();
+      });
+    }
 
-navigator.serial?.addEventListener('disconnect', async () => {
-  if (port) await disconnect();
-});
-
-// ─── Init ─────────────────────────────────────────────────────────────────────
-
-setConnected(false);
-log('sys', 'Ready. Click Connect to open the ESP32 serial port.');
-log('sys', 'Tip: Ctrl+Enter to send  •  parsed JSON lines are dimmed.');
-</script>
+    setConnectedUI(false);
+    logLine("sys", "Ready. Click Connect to open the ESP32 serial port.");
+    logLine("sys", "Parsed JSON lines are dimmed in the terminal.");
+  </script>
 </body>
 </html>
