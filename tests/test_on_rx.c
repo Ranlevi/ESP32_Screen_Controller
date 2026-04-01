@@ -1,5 +1,6 @@
 #include "unity.h"
 #include "oled_stub.h"
+#include "profiler_stub.h"
 
 #include <stdint.h>
 #include <string.h>
@@ -46,6 +47,7 @@ static void send(const char *s)
 void setUp(void)
 {
     stub_reset();
+    stub_profiler_reset();
     on_rx_reset();
 }
 
@@ -123,6 +125,30 @@ void test_oled_command_followed_by_normal_line(void)
     TEST_ASSERT_EQUAL_STRING("hello", stub_last_text());
 }
 
+void test_lowercase_oled_prefix_is_not_a_command(void)
+{
+    //  Matching is case-sensitive: "oled:" is not "OLED:", so the line is NOT
+    //  intercepted as a command — profiler_set_oled_stat must not be called.
+    //  (The text is auto-flushed to OLED at DISPLAY_COLS, then the trailing
+    //  newline produces a second display call with an empty buffer — tested
+    //  separately. The critical invariant here is the key stays unset.)
+    send("oled:free_heap_b\n");
+    TEST_ASSERT_EQUAL_STRING("", stub_last_oled_key());
+    TEST_ASSERT_TRUE(stub_clear_count() >= 1);  // something was displayed, not suppressed
+}
+
+void test_oled_command_empty_key_clears_selection(void)
+{
+    //  "OLED:\n" passes an empty string to profiler_set_oled_stat, which
+    //  clears the current selection. It must not display anything.
+    send("OLED:uptime_s\n");   // set a key first
+    stub_reset();               // clear display counters only
+    send("OLED:\n");
+    TEST_ASSERT_EQUAL_STRING("", stub_last_oled_key());
+    TEST_ASSERT_EQUAL_STRING("", stub_last_text());
+    TEST_ASSERT_EQUAL_INT(0, stub_clear_count());
+}
+
 // ---------------------------------------------------------------------------
 
 int main(void)
@@ -138,5 +164,7 @@ int main(void)
     RUN_TEST(test_multiple_lines);
     RUN_TEST(test_oled_command_does_not_update_display);
     RUN_TEST(test_oled_command_followed_by_normal_line);
+    RUN_TEST(test_lowercase_oled_prefix_is_not_a_command);
+    RUN_TEST(test_oled_command_empty_key_clears_selection);
     return UNITY_END();
 }

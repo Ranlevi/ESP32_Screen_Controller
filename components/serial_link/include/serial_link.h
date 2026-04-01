@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -9,7 +10,6 @@
 typedef struct serial_link_stats_s {
     uint32_t bytes_rx;
     uint32_t bytes_tx;
-    uint32_t rx_overflow_events;
 } serial_link_stats_t;
 
 //  Called from the RX task after each successful read.
@@ -24,6 +24,7 @@ typedef struct {
     int task_stack_size;
     int task_priority;
     int read_timeout_ms;
+    bool echo;                          // if true, received bytes are echoed back
     serial_link_rx_cb_t rx_callback;    // optional; NULL to disable
 } serial_link_cfg_t;
 
@@ -36,6 +37,7 @@ typedef struct {
         .task_stack_size = 3072,            \
         .task_priority = 5,                 \
         .read_timeout_ms = 100,             \
+        .echo = true,                       \
         .rx_callback = NULL,                \
     }
 

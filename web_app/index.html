@@ -965,29 +965,25 @@
 
     async function readLoop() {
       const decoder = new TextDecoder();
+      reader = port.readable.getReader();
       try {
-        while (keepReading && port && port.readable) {
-          reader = port.readable.getReader();
-          try {
-            while (keepReading) {
-              const packet = await reader.read();
-              if (packet.done) break;
-              if (packet.value && packet.value.length) {
-                rxBuffer += decoder.decode(packet.value, { stream: true });
-                const lines = rxBuffer.split(/\r?\n/);
-                rxBuffer = lines.pop() || "";
-                for (const line of lines) {
-                  processSerialLine(line);
-                }
-              }
+        while (keepReading) {
+          const packet = await reader.read();
+          if (packet.done) break;
+          if (packet.value && packet.value.length) {
+            rxBuffer += decoder.decode(packet.value, { stream: true });
+            const lines = rxBuffer.split(/\r?\n/);
+            rxBuffer = lines.pop() || "";
+            for (const line of lines) {
+              processSerialLine(line);
             }
-          } finally {
-            reader.releaseLock();
-            reader = null;
           }
         }
       } catch (error) {
         logLine("err", "Read error: " + error.message);
+      } finally {
+        reader.releaseLock();
+        reader = null;
       }
     }
 
@@ -1017,7 +1013,7 @@
       }
       try {
         if (writer) {
-          writer.releaseLock();
+          await writer.close();
           writer = null;
         }
       } catch (_error) {

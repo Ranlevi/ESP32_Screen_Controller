@@ -21,5 +21,7 @@ CMakeFiles/test_on_rx.dir/test_on_rx.c.obj: \
  C:/msys64/mingw64/include/swprintf.inl \
  C:/msys64/mingw64/include/sec_api/stdio_s.h \
  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/oled_stub.h \
+ C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/profiler_stub.h \
+ C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_err.h \
  C:/msys64/mingw64/include/string.h \
  C:/msys64/mingw64/include/sec_api/string_s.h

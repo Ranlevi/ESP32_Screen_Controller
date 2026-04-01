@@ -51,8 +51,14 @@ static void serial_link_rx_task(void *arg)
             continue;
         }
 
+        //  bytes_rx is written only from this task, and read by the profiler task.
+        //  On the ESP32, a naturally-aligned uint32_t read/write is a single
+        //  instruction and is therefore atomic — no mutex needed. If this field
+        //  is ever widened to uint64_t this assumption must be revisited.
         s_stats.bytes_rx += (uint32_t)read_len;
-        serial_link_write(rx_buffer, (size_t)read_len); //Echo the incoming bytes.
+        if (s_cfg.echo) {
+            serial_link_write(rx_buffer, (size_t)read_len);
+        }
 
         //rx_callback is a pointer to on_rx, defined in main.c
         //on_rx runs on serial_link_rx task's stack, because it is called
@@ -154,9 +160,13 @@ esp_err_t serial_link_init(const serial_link_cfg_t *cfg, const serial_link_stats
     If the function is called before all the bytes were
     written, the output would interleave the bytes from
     the two tasks, corrupting both messages.
-    So serial_link_write() acquires the lock (xSemaphoreTake)before touching
-    the UART, blocking another task forever until it's
-    released (xSemaphoreGive) when done or on error.
+    So serial_link_write() acquires the lock (xSemaphoreTake) before touching
+    the UART, blocking the caller until it is released (xSemaphoreGive).
+
+    portMAX_DELAY is intentional: a finite timeout would cause the caller to
+    silently drop data, which is worse than blocking. A stuck mutex is a bug;
+    the correct outcome is that the task watchdog fires and produces a
+    diagnostic reboot rather than hiding the problem behind dropped messages.
 */
 esp_err_t serial_link_write(const uint8_t *data, size_t len)
 {
@@ -168,9 +178,7 @@ esp_err_t serial_link_write(const uint8_t *data, size_t len)
         return ESP_ERR_INVALID_ARG;
     }
 
-    if (xSemaphoreTake(s_tx_lock, portMAX_DELAY) != pdTRUE) {
-        return ESP_ERR_TIMEOUT;
-    }
+    xSemaphoreTake(s_tx_lock, portMAX_DELAY);
 
     size_t remaining        = len;
     const uint8_t *cursor   = data;
@@ -184,6 +192,9 @@ esp_err_t serial_link_write(const uint8_t *data, size_t len)
 
         remaining -= (size_t)written;
         cursor += written;
+        //  bytes_tx is written here under s_tx_lock, and read by the profiler
+        //  task without a lock. Safe for the same reason as bytes_rx above:
+        //  naturally-aligned uint32_t access is atomic on the ESP32.
         s_stats.bytes_tx += (uint32_t)written;
     }
 

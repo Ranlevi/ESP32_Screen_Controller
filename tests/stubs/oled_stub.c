@@ -26,6 +26,17 @@ esp_err_t oled_show_text(int col, int row, const char *text)
     return ESP_OK;
 }
 
+esp_err_t oled_blit_text(int col, int row, const char *text)
+{
+    //  In tests, blit behaves the same as show_text — captures the last text.
+    return oled_show_text(col, row, text);
+}
+
+esp_err_t oled_flush(void)
+{
+    return ESP_OK;
+}
+
 const char *stub_last_text(void)   { return s_last_text; }
 int         stub_clear_count(void) { return s_clear_count; }
 void        stub_reset(void)       { s_last_text[0] = '\0'; s_clear_count = 0; }

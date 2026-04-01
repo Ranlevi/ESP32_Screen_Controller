@@ -80,6 +80,7 @@ CMakeFiles/test_profiler.dir/stubs/profiler_hw_stubs.c.obj: C:/Users/ranle/Downl
   C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stddef.h \
   C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_err.h \
+  C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/esp_system.h \
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/FreeRTOS.h \
   C:/Users/ranle/Downloads/ESP32_Screen_Controller/tests/stubs/freertos/task.h
 

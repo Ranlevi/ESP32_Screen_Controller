@@ -110,6 +110,24 @@ void test_show_text_at_right_edge_does_not_crash(void)
     TEST_ASSERT_EQUAL(ESP_OK, oled_show_text(128, 0, "A"));
 }
 
+void test_blit_text_no_ghost_pixels_after_shorter_overwrite(void)
+{
+    //  Write a wide string to fill most of row 0, then overwrite with a
+    //  single character. Any column bytes beyond the 'A' glyph (columns 8–127)
+    //  must be zero — no pixels ghosting from the first write.
+    oled_clear();
+    oled_blit_text(0, 0, "AAAAAAAAAAAAAAAA"); // 16 chars = 128 px, fills row
+    oled_blit_text(0, 0, "A");               // 1 char = 8 px, rest should clear
+    oled_flush();
+
+    const uint8_t *bmp = stub_lcd_bitmap();
+    for (int col = 8; col < 128; col++) {
+        if (bmp[col] != 0) {
+            TEST_FAIL_MESSAGE("ghost pixels found after shorter overwrite");
+        }
+    }
+}
+
 // ---------------------------------------------------------------------------
 
 int main(void)
@@ -132,6 +150,7 @@ int main(void)
     RUN_TEST(test_space_char_renders_blank);
     RUN_TEST(test_nonspace_char_has_nonzero_pixels);
     RUN_TEST(test_show_text_at_right_edge_does_not_crash);
+    RUN_TEST(test_blit_text_no_ghost_pixels_after_shorter_overwrite);
 
     return UNITY_END();
 }

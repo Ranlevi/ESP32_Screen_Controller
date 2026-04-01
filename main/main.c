@@ -23,10 +23,10 @@ static const char *TAG = "main";
 
 /*
     Note: Mutex use in clear+show sequences.
-    Both on_rx() and oled_dispaly_stat() can call the screen API
+    Both on_rx() and oled_display_stat() can call the screen API
     to write to it. oled_display_stat() has higher priority than
     on_rx(), so it can take over and write to the frame buffer while
-    on_rx() does - causing dispaly errors. 
+    on_rx() does - causing display errors.
     Solution: we use a mutex to prevent such interleaving. If on_rx()
     locks the mutex, the RTOS schedular will put the profiler task (which
     calls oled_display_stat()) into the blocked state, and will let
@@ -56,7 +56,7 @@ void on_rx(const uint8_t *data, size_t len)
                 //to the profiler.
                 profiler_set_oled_stat(s_line_buf + OLED_CMD_PREFIX_LEN);
             } else {
-                //This data should be printed to the scree.
+                //This data should be printed to the screen.
                 xSemaphoreTake(s_oled_lock, portMAX_DELAY);
                 esp_err_t err = oled_clear();
                 if (err != ESP_OK) {
@@ -108,10 +108,14 @@ void on_rx_reset(void)
 //  Called from the profiler task every interval when a stat is selected.
 static void oled_display_stat(const char *label, const char *value)
 {
+    //  oled_clear flushes a blank frame (1 I2C transfer), then both text rows
+    //  are blitted into the framebuffer without flushing, and a single
+    //  oled_flush sends them together (1 transfer) — 2 total instead of 3.
     xSemaphoreTake(s_oled_lock, portMAX_DELAY);
     oled_clear();
-    oled_show_text(0,  0, label);
-    oled_show_text(0, 32, value);
+    oled_blit_text(0,  0, label);
+    oled_blit_text(0, 32, value);
+    oled_flush();
     xSemaphoreGive(s_oled_lock);
 }
 

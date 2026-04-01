@@ -29,5 +29,9 @@ typedef struct {
 
 #define PROFILER_OLED_KEY_MAX_LEN  15
 
-esp_err_t profiler_init(const profiler_cfg_t *cfg);
-void      profiler_set_oled_stat(const char *key);
+esp_err_t   profiler_init(const profiler_cfg_t *cfg);
+void        profiler_set_oled_stat(const char *key);
+
+//  Test accessors — call stub_profiler_reset() in setUp() before each test.
+const char *stub_last_oled_key(void);
+void        stub_profiler_reset(void);

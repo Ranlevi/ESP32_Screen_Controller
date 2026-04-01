@@ -18,37 +18,33 @@ static const char *TAG = "profiler";
 
 static profiler_cfg_t    s_cfg;
 static bool              s_initialized = false;
-static char              s_oled_key[32] = "";
+static char              s_oled_key[PROFILER_OLED_KEY_MAX_LEN + 1] = "";
 static SemaphoreHandle_t s_oled_key_lock;
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-static const char *reset_reason_str(int r)
+static const char *reset_reason_str(esp_reset_reason_t r)
 {
     switch (r) {
-        case 1:  return "Power On";
-        case 2:  return "Ext Pin";
-        case 3:  return "Software";
-        case 4:  return "Panic";
-        case 5:  return "Int WDT";
-        case 6:  return "Task WDT";
-        case 7:  return "WDT";
-        case 8:  return "Deep Sleep";
-        case 9:  return "Brownout";
-        case 10: return "SDIO";
-        default: return "Unknown";
+        case ESP_RST_POWERON:   return "Power On";
+        case ESP_RST_EXT:       return "Ext Pin";
+        case ESP_RST_SW:        return "Software";
+        case ESP_RST_PANIC:     return "Panic";
+        case ESP_RST_INT_WDT:   return "Int WDT";
+        case ESP_RST_TASK_WDT:  return "Task WDT";
+        case ESP_RST_WDT:       return "WDT";
+        case ESP_RST_DEEPSLEEP: return "Deep Sleep";
+        case ESP_RST_BROWNOUT:  return "Brownout";
+        case ESP_RST_SDIO:      return "SDIO";
+        default:                return "Unknown";
     }
 }
 
 //  Copies src into dst as a JSON-safe string (no surrounding quotes).
 //  Escapes \n → \n, \t → \t, \r → (dropped), " → \", \ → \\.
 //  Returns the number of characters written (excluding null terminator).
-#ifdef PROFILER_TEST_ACCESS
-int escape_for_json(const char *src, char *dst, size_t dst_size);
-#endif
-
 #ifdef PROFILER_TEST_ACCESS
 int
 #else
@@ -70,9 +66,12 @@ escape_for_json(const char *src, char *dst, size_t dst_size)
     return (int)di;
 }
 
-static void send(const char *buf, int n)
+static void send(const char *buf, int n, size_t buf_size)
 {
-    if (n <= 0 || (size_t)n >= 1024 /* generous upper bound */) {
+    //  n is the return value of snprintf: the number of characters it *would*
+    //  have written. If n >= buf_size the output was truncated — drop it rather
+    //  than send malformed JSON. n <= 0 means a formatting error.
+    if (n <= 0 || (size_t)n >= buf_size) {
         return;
     }
     esp_err_t err = s_cfg.write_fn((const uint8_t *)buf, (size_t)n);
@@ -89,10 +88,13 @@ static void profiler_task(void *arg)
 {
     (void)arg;
 
-    //Normally, local variables live in the stack. Here we have three large
-    //buffers which would consume two thirds of the stack. So we declare them
-    //as static, which moves them out of the stack to the BSS segment of the
-    //RAM, and leaves the stack nearly empty.
+    //  These buffers are static so they live in BSS rather than on the task
+    //  stack, which would otherwise consume ~2 KB of the 3 KB stack budget.
+    //  Static locals are shared global state — concurrent calls would corrupt
+    //  each other's output. This is safe ONLY because profiler_init enforces
+    //  that exactly one instance of this task runs at a time (s_initialized
+    //  guard). If that guard is ever relaxed, these must become stack-allocated
+    //  or separately heap-allocated per instance.
     static char sys_buf[256];
     static char task_raw[512];
     static char task_escaped[768];
@@ -109,7 +111,7 @@ static void profiler_task(void *arg)
         uint32_t free_heap     = esp_get_free_heap_size();
         uint32_t min_free_heap = esp_get_minimum_free_heap_size();
         uint32_t task_count    = (uint32_t)uxTaskGetNumberOfTasks();
-        int      reset_reason  = (int)esp_reset_reason();
+        esp_reset_reason_t reset_reason = esp_reset_reason();
         uint32_t bytes_rx      = s_cfg.serial_stats ? s_cfg.serial_stats->bytes_rx : 0;
         uint32_t bytes_tx      = s_cfg.serial_stats ? s_cfg.serial_stats->bytes_tx : 0;
 
@@ -131,7 +133,7 @@ static void profiler_task(void *arg)
             (unsigned long)bytes_rx,
             (unsigned long)bytes_tx);
 
-        send(sys_buf, n);
+        send(sys_buf, n, sizeof(sys_buf));
 
         // --- OLED stat display ---
         //  Copy the key under the lock so the RX task can't overwrite it
@@ -209,7 +211,7 @@ static void profiler_task(void *arg)
         escape_for_json(task_raw, task_escaped, sizeof(task_escaped));
         int m = snprintf(task_buf, sizeof(task_buf),
                          "{\"task_runtime\":\"%s\"}\r\n", task_escaped);
-        send(task_buf, m);
+        send(task_buf, m, sizeof(task_buf));
 #endif
     }
 }
@@ -255,14 +257,31 @@ esp_err_t profiler_init(const profiler_cfg_t *cfg)
     return ESP_OK;
 }
 
+#ifdef PROFILER_TEST_ACCESS
+void profiler_reset_for_test(void)
+{
+    s_initialized = false;
+    s_oled_key[0] = '\0';
+    s_oled_key_lock = NULL;
+}
+
+const char *profiler_get_oled_key_for_test(void)
+{
+    return s_oled_key;
+}
+#endif
+
 void profiler_set_oled_stat(const char *key)
 {
+    if (!s_initialized) {
+        return;
+    }
     xSemaphoreTake(s_oled_key_lock, portMAX_DELAY);
     if (key == NULL) {
         s_oled_key[0] = '\0';
     } else {
-        strncpy(s_oled_key, key, sizeof(s_oled_key) - 1);
-        s_oled_key[sizeof(s_oled_key) - 1] = '\0';
+        strncpy(s_oled_key, key, PROFILER_OLED_KEY_MAX_LEN);
+        s_oled_key[PROFILER_OLED_KEY_MAX_LEN] = '\0';
     }
     xSemaphoreGive(s_oled_key_lock);
 }

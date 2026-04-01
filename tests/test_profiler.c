@@ -4,7 +4,7 @@
 
 #include <string.h>
 
-void setUp(void)  {}
+void setUp(void)    { profiler_reset_for_test(); }
 void tearDown(void) {}
 
 // ---------------------------------------------------------------------------
@@ -26,7 +26,6 @@ static profiler_cfg_t valid_cfg(void)
 
 // ---------------------------------------------------------------------------
 // Tests: profiler_init argument validation
-// These must run before the first successful profiler_init call.
 // ---------------------------------------------------------------------------
 
 void test_init_null_cfg_returns_invalid_arg(void)
@@ -72,6 +71,36 @@ void test_init_is_idempotent(void)
 {
     profiler_cfg_t cfg = valid_cfg();
     TEST_ASSERT_EQUAL(ESP_OK, profiler_init(&cfg));
+}
+
+// ---------------------------------------------------------------------------
+// Tests: profiler_set_oled_stat (requires prior successful profiler_init)
+// ---------------------------------------------------------------------------
+
+void test_set_oled_stat_stores_key(void)
+{
+    profiler_cfg_t cfg = valid_cfg();
+    profiler_init(&cfg);
+    profiler_set_oled_stat("free_heap_b");
+    TEST_ASSERT_EQUAL_STRING("free_heap_b", profiler_get_oled_key_for_test());
+}
+
+void test_set_oled_stat_null_clears_key(void)
+{
+    profiler_cfg_t cfg = valid_cfg();
+    profiler_init(&cfg);
+    profiler_set_oled_stat("uptime_s");
+    profiler_set_oled_stat(NULL);
+    TEST_ASSERT_EQUAL_STRING("", profiler_get_oled_key_for_test());
+}
+
+void test_set_oled_stat_empty_string_clears_key(void)
+{
+    profiler_cfg_t cfg = valid_cfg();
+    profiler_init(&cfg);
+    profiler_set_oled_stat("uptime_s");
+    profiler_set_oled_stat("");
+    TEST_ASSERT_EQUAL_STRING("", profiler_get_oled_key_for_test());
 }
 
 // ---------------------------------------------------------------------------
@@ -157,16 +186,19 @@ int main(void)
 {
     UNITY_BEGIN();
 
-    //  Uninit tests — must run before any successful profiler_init call.
     RUN_TEST(test_init_null_cfg_returns_invalid_arg);
     RUN_TEST(test_init_null_write_fn_returns_invalid_arg);
     RUN_TEST(test_init_zero_interval_returns_invalid_arg);
     RUN_TEST(test_init_zero_stack_returns_invalid_arg);
     RUN_TEST(test_init_zero_priority_returns_invalid_arg);
 
-    //  Post-init tests.
     RUN_TEST(test_init_succeeds_with_valid_config);
     RUN_TEST(test_init_is_idempotent);
+
+    //  profiler_set_oled_stat — requires init (mutex must exist).
+    RUN_TEST(test_set_oled_stat_stores_key);
+    RUN_TEST(test_set_oled_stat_null_clears_key);
+    RUN_TEST(test_set_oled_stat_empty_string_clears_key);
 
     //  escape_for_json — pure logic, no init dependency.
     RUN_TEST(test_escape_plain_string_is_unchanged);

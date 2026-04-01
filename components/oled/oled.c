@@ -155,8 +155,10 @@ static uint8_t s_framebuffer[FB_SIZE];
 
 static const char *TAG = "oled";
 
-static esp_lcd_panel_handle_t s_panel       = NULL;
-static bool                   s_initialized = false;
+static i2c_master_bus_handle_t    s_bus     = NULL;
+static esp_lcd_panel_io_handle_t  s_io      = NULL;
+static esp_lcd_panel_handle_t     s_panel   = NULL;
+static bool                       s_initialized = false;
 
 // ---------------------------------------------------------------------------
 // Internal helpers
@@ -240,15 +242,13 @@ esp_err_t oled_init(void)
         .flags.enable_internal_pullup = true,
     };
 
-    i2c_master_bus_handle_t bus_handle;
-    esp_err_t err = i2c_new_master_bus(&bus_cfg, &bus_handle);
+    esp_err_t err = i2c_new_master_bus(&bus_cfg, &s_bus);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "i2c_new_master_bus failed: %s", esp_err_to_name(err));
         return err;
     }
 
     // --- LCD panel IO (I2C transport) ---
-    esp_lcd_panel_io_handle_t io_handle;
     esp_lcd_panel_io_i2c_config_t io_cfg = {
         .dev_addr            = OLED_I2C_ADDR,
         .scl_speed_hz        = OLED_I2C_FREQ_HZ,
@@ -258,10 +258,11 @@ esp_err_t oled_init(void)
         .lcd_param_bits      = 8,
     };
 
-    err = esp_lcd_new_panel_io_i2c(bus_handle, &io_cfg, &io_handle);
+    err = esp_lcd_new_panel_io_i2c(s_bus, &io_cfg, &s_io);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_lcd_new_panel_io_i2c failed: %s", esp_err_to_name(err));
-        i2c_del_master_bus(bus_handle);
+        i2c_del_master_bus(s_bus);
+        s_bus = NULL;
         return err;
     }
 
@@ -271,11 +272,12 @@ esp_err_t oled_init(void)
         .reset_gpio_num = -1,   // No hard-reset GPIO wired on this board
     };
 
-    err = esp_lcd_new_panel_ssd1306(io_handle, &panel_cfg, &s_panel);
+    err = esp_lcd_new_panel_ssd1306(s_io, &panel_cfg, &s_panel);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_lcd_new_panel_ssd1306 failed: %s", esp_err_to_name(err));
-        esp_lcd_panel_io_del(io_handle);
-        i2c_del_master_bus(bus_handle);
+        esp_lcd_panel_io_del(s_io);
+        i2c_del_master_bus(s_bus);
+        s_io = NULL; s_bus = NULL;
         return err;
     }
 
@@ -283,9 +285,9 @@ esp_err_t oled_init(void)
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_lcd_panel_reset failed: %s", esp_err_to_name(err));
         esp_lcd_panel_del(s_panel);
-        esp_lcd_panel_io_del(io_handle);
-        i2c_del_master_bus(bus_handle);
-        s_panel = NULL;
+        esp_lcd_panel_io_del(s_io);
+        i2c_del_master_bus(s_bus);
+        s_panel = NULL; s_io = NULL; s_bus = NULL;
         return err;
     }
 
@@ -293,9 +295,9 @@ esp_err_t oled_init(void)
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_lcd_panel_init failed: %s", esp_err_to_name(err));
         esp_lcd_panel_del(s_panel);
-        esp_lcd_panel_io_del(io_handle);
-        i2c_del_master_bus(bus_handle);
-        s_panel = NULL;
+        esp_lcd_panel_io_del(s_io);
+        i2c_del_master_bus(s_bus);
+        s_panel = NULL; s_io = NULL; s_bus = NULL;
         return err;
     }
 
@@ -303,9 +305,9 @@ esp_err_t oled_init(void)
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_lcd_panel_disp_on_off failed: %s", esp_err_to_name(err));
         esp_lcd_panel_del(s_panel);
-        esp_lcd_panel_io_del(io_handle);
-        i2c_del_master_bus(bus_handle);
-        s_panel = NULL;
+        esp_lcd_panel_io_del(s_io);
+        i2c_del_master_bus(s_bus);
+        s_panel = NULL; s_io = NULL; s_bus = NULL;
         return err;
     }
 
@@ -324,7 +326,15 @@ esp_err_t oled_clear(void)
     return flush();
 }
 
-esp_err_t oled_show_text(int col, int row, const char *text)
+esp_err_t oled_flush(void)
+{
+    if (!s_initialized) {
+        return ESP_ERR_INVALID_STATE;
+    }
+    return flush();
+}
+
+esp_err_t oled_blit_text(int col, int row, const char *text)
 {
     if (!s_initialized) {
         return ESP_ERR_INVALID_STATE;
@@ -334,17 +344,37 @@ esp_err_t oled_show_text(int col, int row, const char *text)
         return ESP_ERR_INVALID_ARG;
     }
 
-    //  row must be page-aligned; silently round down.
-    int y = (row / FONT_CHAR_HEIGHT) * FONT_CHAR_HEIGHT;
+    //  Clip silently: col or row entirely off-screen — nothing to draw.
+    if (col >= OLED_PIXEL_WIDTH || row >= OLED_PIXEL_HEIGHT) {
+        return ESP_OK;
+    }
+
+    int page = (row / FONT_CHAR_HEIGHT);
+    int y    = page * FONT_CHAR_HEIGHT;
+
+    //  Zero the entire row from col to the right edge before blitting.
+    //  Without this, pixels from a previously longer string would ghost
+    //  through when overwriting with a shorter one.
+    memset(&s_framebuffer[page * OLED_PIXEL_WIDTH + col],
+           0,
+           (size_t)(OLED_PIXEL_WIDTH - col));
 
     int x = col;
     for (const char *p = text; *p != '\0'; p++) {
         if (x + FONT_CHAR_WIDTH > OLED_PIXEL_WIDTH) {
-            break;  // clip — don't wrap
+            break;
         }
-        blit_char(x, y, *p); //Insert text into the framebuffer.
+        blit_char(x, y, *p);
         x += FONT_CHAR_WIDTH;
     }
+    return ESP_OK;
+}
 
-    return flush(); //actual writing to the display.
+esp_err_t oled_show_text(int col, int row, const char *text)
+{
+    esp_err_t err = oled_blit_text(col, row, text);
+    if (err != ESP_OK) {
+        return err;
+    }
+    return flush();
 }
